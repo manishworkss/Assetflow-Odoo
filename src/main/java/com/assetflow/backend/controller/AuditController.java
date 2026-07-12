@@ -17,6 +17,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/audits")
 @SecurityRequirement(name = "Bearer Authentication")
+/**
+ * REST controller for managing audit cycles and records.
+ * Provides endpoints for creating audit cycles, logging audit records, and retrieving audit history.
+ */
 public class AuditController {
 
     @Autowired

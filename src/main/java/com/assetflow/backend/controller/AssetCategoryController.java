@@ -16,6 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/categories")
 @SecurityRequirement(name = "Bearer Authentication")
+/**
+ * REST controller for managing asset categories.
+ * Provides endpoints for creating, retrieving, and listing asset categories.
+ */
 public class AssetCategoryController {
 
     @Autowired

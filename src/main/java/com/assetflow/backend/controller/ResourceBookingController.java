@@ -16,6 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/bookings")
 @SecurityRequirement(name = "Bearer Authentication")
+/**
+ * REST controller for managing resource bookings.
+ * Provides endpoints for booking resources, cancelling bookings, and retrieving user or asset bookings.
+ */
 public class ResourceBookingController {
 
     @Autowired

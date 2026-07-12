@@ -16,6 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/allocations")
 @SecurityRequirement(name = "Bearer Authentication")
+/**
+ * REST controller for managing asset allocations.
+ * Provides endpoints for allocating, returning, and retrieving asset allocations.
+ */
 public class AssetAllocationController {
 
     @Autowired

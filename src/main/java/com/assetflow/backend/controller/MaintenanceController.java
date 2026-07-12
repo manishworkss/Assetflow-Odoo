@@ -18,6 +18,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/maintenance")
 @SecurityRequirement(name = "Bearer Authentication")
+/**
+ * REST controller for handling maintenance requests.
+ * Provides endpoints for creating, resolving, and retrieving maintenance requests for assets.
+ */
 public class MaintenanceController {
 
     @Autowired

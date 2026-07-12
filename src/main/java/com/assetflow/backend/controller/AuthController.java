@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+/**
+ * REST controller for handling user authentication and registration.
+ * Provides endpoints for signing up and logging in users.
+ */
 public class AuthController {
 
     @Autowired

@@ -16,6 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/assets")
 @SecurityRequirement(name = "Bearer Authentication")
+/**
+ * REST controller for managing assets.
+ * Provides endpoints for performing CRUD operations on assets.
+ */
 public class AssetController {
 
     @Autowired
