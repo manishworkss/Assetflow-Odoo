@@ -118,7 +118,7 @@ export const authService = {
   forgotPassword: async (email) => {
     if (USE_MOCK) {
       await new Promise((resolve) => setTimeout(resolve, 400));
-      return 'If that email exists, a password reset link has been sent.';
+      return 'Password reset token sent to ' + email;
     }
     return apiClient.post('/auth/forgot-password', { email });
   },
@@ -129,6 +129,9 @@ export const authService = {
   resetPassword: async (email, token, newPassword) => {
     if (USE_MOCK) {
       await new Promise((resolve) => setTimeout(resolve, 400));
+      if (!token) {
+        throw new Error('Invalid or missing token.');
+      }
       return 'Password successfully reset.';
     }
     return apiClient.post('/auth/reset-password', { email, token, newPassword });
