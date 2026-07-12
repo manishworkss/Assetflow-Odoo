@@ -50,17 +50,19 @@ public class EmailServiceImpl implements EmailService {
                 message.setSubject(subject);
                 message.setText(body);
                 javaMailSender.send(message);
-                logger.info("Successfully dispatched OTP verification email to {}", toEmail);
+                logger.info("Successfully dispatched real OTP verification email to {}", toEmail);
                 return;
             } catch (Exception ex) {
-                logger.warn("SMTP email dispatch failed (using fallback simulation): {}", ex.getMessage());
+                logger.warn("SMTP real email dispatch failed (Please check MAIL_USERNAME and MAIL_PASSWORD): {}", ex.getMessage());
             }
+        } else {
+            logger.info("Real SMTP email dispatch skipped because spring.mail.password is empty. Configure MAIL_USERNAME and MAIL_PASSWORD in application.properties to send live emails to your inbox.");
         }
 
-        // Professional Enterprise Simulation & Audit Log (when SMTP is not configured)
+        // Professional Enterprise Simulation & Audit Log (when SMTP is not configured or fails)
         logger.info("\n" +
                 "=========================================================================\n" +
-                "[ENTERPRISE EMAIL SERVICE DISPATCH]\n" +
+                "[ENTERPRISE EMAIL SERVICE DISPATCH - SIMULATION MODE]\n" +
                 "To:      {}\n" +
                 "From:    {}\n" +
                 "Subject: {}\n" +
