@@ -32,7 +32,7 @@ export const auditService = {
   createAuditCycle: async ({ title, departmentId, departmentName, locationScope, startDate, endDate }) => {
     if (USE_MOCK) {
       await new Promise((resolve) => setTimeout(resolve, 400));
-      const currentUser = useAuthStore.getState().user || { name: 'Manish Kumar' };
+      const currentUser = useAuthStore.getState().user || { name: 'Marcus Sterling' };
       const scopedAssets = mockAssets.filter((a) => Number(a.departmentId) === Number(departmentId));
       const newCycle = {
         id: Date.now(),

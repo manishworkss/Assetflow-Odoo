@@ -7,8 +7,8 @@ import { Button } from '../../components/common/Button';
 import { Box, Lock, Mail, Sparkles, UserCheck, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export const Login = () => {
-  const [email, setEmail] = useState('manish@assetflow.odoo');
-  const [password, setPassword] = useState('odoo2026');
+  const [email, setEmail] = useState('marcus.s@assetflow.com');
+  const [password, setPassword] = useState('admin2026');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuthStore();
@@ -31,25 +31,25 @@ export const Login = () => {
 
   const handleQuickDemoLogin = async (demoEmail, demoName, roleLabel) => {
     setEmail(demoEmail);
-    setPassword('odoo2026');
+    setPassword('admin2026');
     setLoading(true);
     try {
-      const { token, user } = await authService.login(demoEmail, 'odoo2026');
+      const { token, user } = await authService.login(demoEmail, 'admin2026');
       login(user, token, true);
-      showToast(`Demo Logged in as ${user.name} (${roleLabel})`, 'success');
+      showToast(`Logged in as ${user.name} (${roleLabel})`, 'success');
       navigate('/');
     } catch (err) {
-      showToast('Could not load demo profile', 'error');
+      showToast('Could not load profile', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   const demoAccounts = [
-    { name: 'Manish Kumar', email: 'manish@assetflow.odoo', role: 'ADMIN', badge: 'bg-purple-100 text-purple-800' },
-    { name: 'Rohan Mehta', email: 'rohan.m@assetflow.odoo', role: 'ASSET_MANAGER', badge: 'bg-indigo-100 text-indigo-800' },
-    { name: 'Aditi Rao', email: 'aditi.rao@assetflow.odoo', role: 'DEPARTMENT_HEAD', badge: 'bg-cyan-100 text-cyan-800' },
-    { name: 'Priya Shah', email: 'priya.s@assetflow.odoo', role: 'EMPLOYEE', badge: 'bg-slate-100 text-slate-800' },
+    { name: 'Marcus Sterling', email: 'marcus.s@assetflow.com', role: 'ADMIN', badge: 'bg-purple-100 text-purple-800' },
+    { name: 'Sarah Jenkins', email: 'sarah.j@assetflow.com', role: 'ASSET_MANAGER', badge: 'bg-indigo-100 text-indigo-800' },
+    { name: 'David Chen', email: 'david.c@assetflow.com', role: 'DEPARTMENT_HEAD', badge: 'bg-cyan-100 text-cyan-800' },
+    { name: 'Elena Rostova', email: 'elena.r@assetflow.com', role: 'EMPLOYEE', badge: 'bg-slate-100 text-slate-800' },
   ];
 
   return (
@@ -60,7 +60,7 @@ export const Login = () => {
 
       <div className="relative w-full max-w-4xl bg-white dark:bg-slate-800/95 rounded-3xl shadow-2xl border border-white/20 dark:border-slate-700/80 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
         
-        {/* Left Side: Brand & Hackathon Pitch */}
+        {/* Left Side: Brand & Enterprise Highlights */}
         <div className="lg:col-span-5 bg-gradient-to-b from-[#714B67] to-[#452B3F] p-8 sm:p-10 text-white flex flex-col justify-between relative overflow-hidden">
           <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-white/5 rounded-full blur-xl pointer-events-none" />
           
@@ -72,7 +72,7 @@ export const Login = () => {
               <div>
                 <h1 className="text-2xl font-black tracking-tight">AssetFlow</h1>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-purple-200 bg-white/10 px-2 py-0.5 rounded-full">
-                  Odoo Hackathon
+                  Enterprise Suite
                 </span>
               </div>
             </div>
@@ -81,24 +81,24 @@ export const Login = () => {
               Enterprise Asset & Resource Management System
             </h2>
             <p className="text-sm text-purple-100/80 leading-relaxed mb-6">
-              Complete life-cycle tracking from requisition to disposal, zero-overlap room/vehicle reservations, condition check-ins, and Q2/Q3 audit verifications.
+              Complete life-cycle tracking from requisition to disposal, zero-overlap room/vehicle reservations, condition check-ins, and automated audit verifications.
             </p>
 
             <div className="space-y-3 text-xs text-purple-100/90 bg-white/10 p-4 rounded-2xl border border-white/10 backdrop-blur-xs">
               <div className="flex items-center gap-2.5 font-semibold text-white">
                 <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Seamless Spring Boot + MySQL + JWT Backend Integration</span>
+                <span>Enterprise Role-Based Access Control (RBAC)</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
-                <span>4-Role Matrix: Admin, Manager, Head & Employee</span>
+                <span>Real-time Lifecycle & Maintenance Tracking</span>
               </div>
             </div>
           </div>
 
           <div className="mt-8 text-[11px] text-purple-200/60 border-t border-white/10 pt-4 flex justify-between">
-            <span>Built by Team 4</span>
-            <span>Frontend Lead: Manish Kumar</span>
+            <span>AssetFlow Enterprise Platform</span>
+            <span>© 2026 AssetFlow Inc.</span>
           </div>
         </div>
 
@@ -107,7 +107,7 @@ export const Login = () => {
           <div className="mb-6">
             <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Sign in to your account</h3>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-              Enter your corporate credentials or choose a quick demo role below
+              Enter your corporate credentials or choose a quick role profile below
             </p>
           </div>
 
@@ -124,7 +124,7 @@ export const Login = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@assetflow.odoo"
+                  placeholder="name@assetflow.com"
                   className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] transition-all"
                 />
               </div>
@@ -164,12 +164,12 @@ export const Login = () => {
             </Button>
           </form>
 
-          {/* Hackathon Demo Quick Login Section */}
+          {/* Role Profiles Quick Evaluation Section */}
           <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700/80">
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="w-4 h-4 text-[#714B67] dark:text-purple-400" />
               <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
-                1-Click Judge & Demo Role Switchers
+                1-Click Role Profiles for Evaluation
               </span>
             </div>
             <div className="grid grid-cols-2 gap-2 sm:gap-2.5">

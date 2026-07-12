@@ -30,7 +30,7 @@ export const RoleGuard = ({ allowedRoles = [], children, fallback = null }) => {
         Your current role (<span className="font-semibold text-slate-700 dark:text-slate-200">{user.role}</span>) does not have authorization to view or perform actions on this section.
       </p>
       <div className="text-xs text-slate-400">
-        Tip: Use the instant **Role Switcher** in the top navbar during the hackathon demo to test different permissions!
+        Tip: Contact your organization administrator or use the Role Switcher in the top navigation bar to elevate your permissions.
       </div>
     </div>
   );

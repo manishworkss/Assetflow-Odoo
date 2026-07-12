@@ -91,11 +91,11 @@ export const Dashboard = () => {
               {user?.role || 'ADMIN'} Portal
             </span>
             <span className="text-purple-200 text-xs flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" /> Real-time MySQL Sync
+              <Sparkles className="w-3.5 h-3.5 text-amber-300" /> Enterprise Database Sync
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
-            Welcome, {user?.name || 'Manish Kumar'}
+            Welcome, {user?.name || 'Marcus Sterling'}
           </h1>
           <p className="text-sm text-purple-100/90 mt-1">
             {user?.role === 'ADMIN' && 'System-wide ERP operations, audit controls, and multi-department monitoring.'}

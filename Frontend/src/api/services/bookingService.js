@@ -55,7 +55,7 @@ export const bookingService = {
         throw new Error(`Booking Conflict: ${resource.name} is already booked during this time slot! Please select another time.`);
       }
 
-      const currentUser = useAuthStore.getState().user || { id: 1, name: 'Manish Kumar', departmentName: 'Engineering & IT' };
+      const currentUser = useAuthStore.getState().user || { id: 1, name: 'Marcus Sterling', departmentName: 'Engineering & IT' };
       const newBooking = {
         id: Date.now(),
         resourceName: resource.name,

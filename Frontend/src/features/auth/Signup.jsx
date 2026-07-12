@@ -80,21 +80,21 @@ export const Signup = () => {
               <div className="flex items-start gap-2.5">
                 <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Teammate Phase 3 Compliant:</strong> New registrations are assigned the `EMPLOYEE` role automatically by default.
+                  <strong>Enterprise Security Compliant:</strong> New registrations are assigned the <code>EMPLOYEE</code> role automatically by default.
                 </span>
               </div>
               <div className="flex items-start gap-2.5">
                 <Sparkles className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
                 <span>
-                  Department Heads or Admins can promote you to higher roles directly via the Organization Setup screen!
+                  Department Heads or Admins can promote you to higher roles directly via the Organization Setup screen.
                 </span>
               </div>
             </div>
           </div>
 
           <div className="mt-8 text-[11px] text-purple-200/60 border-t border-white/10 pt-4 flex justify-between">
-            <span>Built by Team 4</span>
-            <span>Frontend Lead: Manish Kumar</span>
+            <span>AssetFlow Enterprise Suite</span>
+            <span>© 2026 AssetFlow Technologies Inc.</span>
           </div>
         </div>
 
@@ -103,7 +103,7 @@ export const Signup = () => {
           <div className="mb-6">
             <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Create Employee Account</h3>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-              Enter your details below to request access to the AssetFlow inventory
+              Join your corporate team workspace and start accessing company assets immediately.
             </p>
           </div>
 
@@ -119,7 +119,7 @@ export const Signup = () => {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Vikram Sharma"
+                  placeholder="Elena Rostova"
                   className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] transition-all"
                 />
               </div>
@@ -136,7 +136,7 @@ export const Signup = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="vikram@assetflow.odoo"
+                  placeholder="elena.r@assetflow.com"
                   className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] transition-all"
                 />
               </div>

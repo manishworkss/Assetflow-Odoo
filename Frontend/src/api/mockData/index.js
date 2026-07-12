@@ -1,10 +1,10 @@
-// Comprehensive Enterprise Mock Data for AssetFlow (Odoo Hackathon)
+// Comprehensive Enterprise Mock Data for AssetFlow Suite
 
 export const mockUsers = [
   {
     id: 1,
-    name: 'Manish Kumar',
-    email: 'manish@assetflow.odoo',
+    name: 'Marcus Sterling',
+    email: 'marcus.s@assetflow.com',
     role: 'ADMIN',
     departmentId: 101,
     departmentName: 'Engineering & IT',
@@ -12,8 +12,8 @@ export const mockUsers = [
   },
   {
     id: 2,
-    name: 'Rohan Mehta',
-    email: 'rohan.m@assetflow.odoo',
+    name: 'Sarah Jenkins',
+    email: 'sarah.j@assetflow.com',
     role: 'ASSET_MANAGER',
     departmentId: 102,
     departmentName: 'Facilities & Ops',
@@ -21,8 +21,8 @@ export const mockUsers = [
   },
   {
     id: 3,
-    name: 'Aditi Rao',
-    email: 'aditi.rao@assetflow.odoo',
+    name: 'David Chen',
+    email: 'david.c@assetflow.com',
     role: 'DEPARTMENT_HEAD',
     departmentId: 101,
     departmentName: 'Engineering & IT',
@@ -30,8 +30,8 @@ export const mockUsers = [
   },
   {
     id: 4,
-    name: 'Priya Shah',
-    email: 'priya.s@assetflow.odoo',
+    name: 'Elena Rostova',
+    email: 'elena.r@assetflow.com',
     role: 'EMPLOYEE',
     departmentId: 101,
     departmentName: 'Engineering & IT',
@@ -39,8 +39,8 @@ export const mockUsers = [
   },
   {
     id: 5,
-    name: 'Arjun Nair',
-    email: 'arjun.n@assetflow.odoo',
+    name: 'Michael Vance',
+    email: 'michael.v@assetflow.com',
     role: 'EMPLOYEE',
     departmentId: 103,
     departmentName: 'Field Operations',
@@ -48,8 +48,8 @@ export const mockUsers = [
   },
   {
     id: 6,
-    name: 'Sana Iqbal',
-    email: 'sana.iqbal@assetflow.odoo',
+    name: 'Samantha Vance',
+    email: 'samantha.v@assetflow.com',
     role: 'DEPARTMENT_HEAD',
     departmentId: 103,
     departmentName: 'Field Operations',
@@ -200,7 +200,7 @@ export const mockAssets = [
     expectedReturnDate: null,
     photoUrl: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=600&q=80',
     history: [
-      { id: 301, date: '2026-01-20', action: 'REGISTERED', user: 'Manish Kumar', notes: 'Batch order for new engineering hires' }
+      { id: 301, date: '2026-01-20', action: 'REGISTERED', user: 'Marcus Sterling', notes: 'Batch order for new engineering hires' }
     ]
   },
   {
@@ -394,7 +394,7 @@ export const mockAuditCycles = [
     startDate: '2026-04-01',
     endDate: '2026-04-15',
     status: 'CLOSED',
-    auditors: ['Sana Iqbal', 'Manish Kumar'],
+    auditors: ['Samantha Vance', 'Marcus Sterling'],
     totalAssetsScoped: 26,
     verifiedCount: 26,
     missingCount: 0,
@@ -405,9 +405,9 @@ export const mockAuditCycles = [
 ];
 
 export const mockLogs = [
-  { id: 901, timestamp: '2026-07-12 09:30 AM', user: 'Priya Shah', action: 'BOOKING_CREATED', details: 'Booked Conference Room B2 for Jul 14 02:00 PM' },
-  { id: 902, timestamp: '2026-07-12 08:45 AM', user: 'Aditi Rao', action: 'MAINTENANCE_APPROVED', details: 'Approved repair request #5001 for Sony Projector AF-0062' },
-  { id: 903, timestamp: '2026-07-11 04:15 PM', user: 'Rohan Mehta', action: 'ASSET_REGISTERED', details: 'Registered new Dell Latitude 7440 (Asset Tag: AF-0312)' },
-  { id: 904, timestamp: '2026-07-11 02:00 PM', user: 'Manish Kumar', action: 'ROLE_PROMOTED', details: 'Promoted Aditi Rao to DEPARTMENT_HEAD for Engineering & IT' },
-  { id: 905, timestamp: '2026-07-10 11:20 AM', user: 'System Alert', action: 'OVERDUE_FLAGGED', details: 'MacBook Pro AF-0114 return overdue by 12 days (Priya Shah)' }
+  { id: 901, timestamp: '2026-07-12 09:30 AM', user: 'Elena Rostova', action: 'BOOKING_CREATED', details: 'Booked Conference Room B2 for Jul 14 02:00 PM' },
+  { id: 902, timestamp: '2026-07-12 08:45 AM', user: 'David Chen', action: 'MAINTENANCE_APPROVED', details: 'Approved repair request #5001 for Sony Projector AF-0062' },
+  { id: 903, timestamp: '2026-07-11 04:15 PM', user: 'Sarah Jenkins', action: 'ASSET_REGISTERED', details: 'Registered new Dell Latitude 7440 (Asset Tag: AF-0312)' },
+  { id: 904, timestamp: '2026-07-11 02:00 PM', user: 'Marcus Sterling', action: 'ROLE_PROMOTED', details: 'Promoted David Chen to DEPARTMENT_HEAD for Engineering & IT' },
+  { id: 905, timestamp: '2026-07-10 11:20 AM', user: 'System Alert', action: 'OVERDUE_FLAGGED', details: 'MacBook Pro AF-0114 return overdue by 12 days (Elena Rostova)' }
 ];

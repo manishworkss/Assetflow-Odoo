@@ -40,12 +40,12 @@ export const useAuthStore = create((set, get) => ({
     set({ user: null, token: null, isAuthenticated: false });
   },
 
-  // Hackathon Instant Role Switcher for live demos to judges
+  // Instant Role Switcher for profile elevation and evaluation
   setRole: (newRole) => {
     const defaultAdmin = {
       id: 1,
-      name: 'Manish Kumar',
-      email: 'manish@assetflow.odoo',
+      name: 'Marcus Sterling',
+      email: 'marcus.s@assetflow.com',
       role: 'ADMIN',
       departmentId: 101,
       departmentName: 'Engineering & IT'

@@ -12,7 +12,7 @@ export const dashboardService = {
   getDashboardSummary: async () => {
     if (USE_MOCK) {
       await new Promise((resolve) => setTimeout(resolve, 350));
-      const user = useAuthStore.getState().user || { role: 'ADMIN', departmentId: 101, name: 'Manish Kumar' };
+      const user = useAuthStore.getState().user || { role: 'ADMIN', departmentId: 101, name: 'Marcus Sterling' };
       const role = user.role;
 
       let assets = [...mockAssets];

@@ -29,7 +29,7 @@ public class OpenApiConfig {
                 .info(new Info().title("AssetFlow API")
                         .description("API Documentation for AssetFlow Enterprise Asset & Resource Management System")
                         .version("v1.0.0")
-                        .contact(new Contact().name("Hackathon Team"))
+                        .contact(new Contact().name("AssetFlow Engineering Suite"))
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()));

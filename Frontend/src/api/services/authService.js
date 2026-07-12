@@ -13,7 +13,7 @@ export const authService = {
       await new Promise((resolve) => setTimeout(resolve, 350));
       const foundUser = mockUsers.find((u) => u.email.toLowerCase() === email.toLowerCase());
       if (!foundUser) {
-        throw new Error('Invalid email or password. Try manish@assetflow.odoo');
+        throw new Error('Invalid email or password. Try marcus.s@assetflow.com / admin2026');
       }
       return {
         token: `mock-jwt-token-${foundUser.id}-${Date.now()}`,
