@@ -28,6 +28,10 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 
 @Service
+/**
+ * Implementation of the {@link AuthService} interface.
+ * Handles the business logic for user authentication, registration, and role assignment.
+ */
 public class AuthServiceImpl implements AuthService {
 
     @Autowired

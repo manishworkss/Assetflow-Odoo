@@ -21,6 +21,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+/**
+ * Implementation of the {@link AssetAllocationService} interface.
+ * Handles the business logic for allocating assets to users and processing asset returns.
+ */
 public class AssetAllocationServiceImpl implements AssetAllocationService {
 
     @Autowired
