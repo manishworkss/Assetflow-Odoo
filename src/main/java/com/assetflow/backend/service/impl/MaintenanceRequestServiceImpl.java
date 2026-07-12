@@ -100,6 +100,33 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
+    public MaintenanceRequestDto updateRequestStatus(Long requestId, String status, String technicianAssigned, BigDecimal costEstimate) {
+        MaintenanceRequest request = maintenanceRepository.findById(requestId)
+                .orElseThrow(() -> new ResourceNotFoundException("Maintenance request not found"));
+
+        if (status != null) {
+            MaintenanceStatus newStatus = MaintenanceStatus.valueOf(status.toUpperCase());
+            request.setStatus(newStatus);
+            
+            // If resolved, free up the asset
+            if (newStatus == MaintenanceStatus.RESOLVED) {
+                Asset asset = request.getAsset();
+                asset.setStatus(AssetStatus.AVAILABLE);
+                assetRepository.save(asset);
+                request.setResolvedAt(LocalDateTime.now());
+            }
+        }
+
+        if (costEstimate != null) {
+            request.setCost(costEstimate);
+        }
+
+        MaintenanceRequest updatedRequest = maintenanceRepository.save(request);
+        return mapToDto(updatedRequest);
+    }
+
     private MaintenanceRequestDto mapToDto(MaintenanceRequest request) {
         return MaintenanceRequestDto.builder()
                 .id(request.getId())

@@ -49,13 +49,30 @@ public class MaintenanceController {
         return ResponseEntity.ok(ApiResponse.success("Maintenance request resolved successfully", resolvedRequest));
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<MaintenanceRequestDto>> updateRequestStatus(
+            @PathVariable("id") Long id,
+            @RequestBody Map<String, Object> updateDetails) {
+        
+        String status = (String) updateDetails.get("status");
+        String technician = (String) updateDetails.get("technicianAssigned");
+        BigDecimal cost = null;
+        if (updateDetails.get("costEstimate") != null) {
+            cost = new BigDecimal(updateDetails.get("costEstimate").toString());
+        }
+
+        MaintenanceRequestDto updatedRequest = maintenanceService.updateRequestStatus(id, status, technician, cost);
+        return ResponseEntity.ok(ApiResponse.success("Maintenance request updated successfully", updatedRequest));
+    }
+
     @GetMapping("/asset/{assetId}")
     public ResponseEntity<ApiResponse<List<MaintenanceRequestDto>>> getRequestsByAsset(@PathVariable("assetId") Long assetId) {
         List<MaintenanceRequestDto> requests = maintenanceService.getRequestsByAsset(assetId);
         return ResponseEntity.ok(ApiResponse.success("Maintenance requests for asset retrieved successfully", requests));
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('ASSET_MANAGER')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public ResponseEntity<ApiResponse<List<MaintenanceRequestDto>>> getAllRequests() {
         List<MaintenanceRequestDto> requests = maintenanceService.getAllRequests();
