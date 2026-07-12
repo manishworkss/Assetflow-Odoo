@@ -4,10 +4,11 @@ import { Sidebar } from './Sidebar';
 import { TopNavbar } from './TopNavbar';
 import { Toast } from './Toast';
 import { useUiStore } from '../../store/uiStore';
+import { AssetModal } from '../../features/assets/AssetModal';
 import clsx from 'clsx';
 
 export const AppLayout = () => {
-  const { sidebarOpen } = useUiStore();
+  const { sidebarOpen, activeModal, closeModal, modalPayload } = useUiStore();
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex font-sans transition-colors duration-200">
@@ -37,6 +38,16 @@ export const AppLayout = () => {
 
       {/* Global Toast Notification System */}
       <Toast />
+
+      {/* Global Modals */}
+      <AssetModal
+        isOpen={activeModal === 'REGISTER_ASSET'}
+        onClose={closeModal}
+        assetToEdit={modalPayload}
+        onSaved={() => {
+           window.dispatchEvent(new Event('REFRESH_DATA'));
+        }}
+      />
     </div>
   );
 };

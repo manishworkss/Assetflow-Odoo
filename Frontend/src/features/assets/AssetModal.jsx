@@ -12,8 +12,8 @@ export const AssetModal = ({ isOpen, onClose, assetToEdit, onSaved }) => {
   // Form State
   const [name, setName] = useState('');
   const [assetTag, setAssetTag] = useState('');
-  const [category, setCategory] = useState('Laptops');
-  const [departmentName, setDepartmentName] = useState('Engineering & IT');
+  const [categoryId, setCategoryId] = useState('201');
+  const [departmentId, setDepartmentId] = useState('101');
   const [serialNumber, setSerialNumber] = useState('');
   const [status, setStatus] = useState('AVAILABLE');
   const [condition, setCondition] = useState('NEW');
@@ -25,8 +25,8 @@ export const AssetModal = ({ isOpen, onClose, assetToEdit, onSaved }) => {
     if (assetToEdit) {
       setName(assetToEdit.name || '');
       setAssetTag(assetToEdit.assetTag || '');
-      setCategory(assetToEdit.category || 'Laptops');
-      setDepartmentName(assetToEdit.departmentName || 'Engineering & IT');
+      setCategoryId(assetToEdit.categoryId ? String(assetToEdit.categoryId) : '201');
+      setDepartmentId(assetToEdit.departmentId ? String(assetToEdit.departmentId) : '101');
       setSerialNumber(assetToEdit.serialNumber || '');
       setStatus(assetToEdit.status || 'AVAILABLE');
       setCondition(assetToEdit.condition || 'GOOD');
@@ -36,8 +36,8 @@ export const AssetModal = ({ isOpen, onClose, assetToEdit, onSaved }) => {
     } else {
       setName('');
       setAssetTag(`AST-${Math.floor(1000 + Math.random() * 9000)}`);
-      setCategory('Laptops');
-      setDepartmentName('Engineering & IT');
+      setCategoryId('201');
+      setDepartmentId('101');
       setSerialNumber(`SN-${Math.random().toString(36).substring(2, 8).toUpperCase()}`);
       setStatus('AVAILABLE');
       setCondition('NEW');
@@ -53,8 +53,8 @@ export const AssetModal = ({ isOpen, onClose, assetToEdit, onSaved }) => {
     const payload = {
       name,
       assetTag,
-      category,
-      departmentName,
+      categoryId: Number(categoryId),
+      departmentId: Number(departmentId),
       serialNumber,
       status,
       condition,
@@ -121,15 +121,14 @@ export const AssetModal = ({ isOpen, onClose, assetToEdit, onSaved }) => {
               Category
             </label>
             <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
               className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white cursor-pointer"
             >
-              <option value="Laptops">Laptops & Compute</option>
-              <option value="Heavy Machinery">Heavy Machinery</option>
-              <option value="Fleet Vehicles">Fleet Vehicles</option>
-              <option value="Conference Rooms">Conference Rooms</option>
-              <option value="Networking">Networking Infrastructure</option>
+              <option value="201">Electronics & IT Hardware</option>
+              <option value="202">Office Furniture & Ergonomics</option>
+              <option value="203">Company Vehicles & Transport</option>
+              <option value="204">Shared AV Equipment & Projectors</option>
             </select>
           </div>
 
@@ -138,14 +137,14 @@ export const AssetModal = ({ isOpen, onClose, assetToEdit, onSaved }) => {
               Department Ownership
             </label>
             <select
-              value={departmentName}
-              onChange={(e) => setDepartmentName(e.target.value)}
+              value={departmentId}
+              onChange={(e) => setDepartmentId(e.target.value)}
               className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white cursor-pointer"
             >
-              <option value="Engineering & IT">Engineering & IT</option>
-              <option value="Facilities & Ops">Facilities & Ops</option>
-              <option value="Field Operations">Field Operations</option>
-              <option value="Human Resources">Human Resources</option>
+              <option value="101">Engineering & IT</option>
+              <option value="102">Facilities & Ops</option>
+              <option value="103">Field Operations</option>
+              <option value="104">Human Resources & Administration</option>
             </select>
           </div>
 

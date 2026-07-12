@@ -5,7 +5,6 @@ import { useUiStore } from '../../store/uiStore';
 import { Card } from '../../components/common/Card';
 import { Button } from '../../components/common/Button';
 import { Badge } from '../../components/common/Badge';
-import { AssetModal } from './AssetModal';
 import { AssetDrawer } from './AssetDrawer';
 import {
   Search,
@@ -36,9 +35,7 @@ export const AssetDirectory = () => {
   const [selectedStatus, setSelectedStatus] = useState('ALL');
   const [viewMode, setViewMode] = useState('TABLE'); // 'TABLE' or 'GRID'
 
-  // Modal / Drawer state
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [assetToEdit, setAssetToEdit] = useState(null);
+  // Drawer state
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState(null);
 
@@ -56,6 +53,9 @@ export const AssetDirectory = () => {
 
   useEffect(() => {
     fetchAssets();
+    const handleRefresh = () => fetchAssets();
+    window.addEventListener('REFRESH_DATA', handleRefresh);
+    return () => window.removeEventListener('REFRESH_DATA', handleRefresh);
   }, []);
 
   const handleDeleteAsset = async (id, tag) => {
@@ -129,10 +129,7 @@ export const AssetDirectory = () => {
             <Button
               variant="odoo"
               icon={Plus}
-              onClick={() => {
-                setAssetToEdit(null);
-                setIsModalOpen(true);
-              }}
+              onClick={() => openModal('REGISTER_ASSET')}
             >
               Register Asset Profile
             </Button>
@@ -297,10 +294,7 @@ export const AssetDirectory = () => {
                       {canManage && (
                         <>
                           <button
-                            onClick={() => {
-                              setAssetToEdit(asset);
-                              setIsModalOpen(true);
-                            }}
+                            onClick={() => openModal('REGISTER_ASSET', asset)}
                             className="p-1.5 rounded-lg text-slate-400 hover:text-[#714B67] hover:bg-purple-50 dark:hover:bg-purple-950/40"
                             title="Edit Profile"
                           >
@@ -376,22 +370,13 @@ export const AssetDirectory = () => {
         </div>
       )}
 
-      {/* Supporting Registration & Profile Edit Modal */}
-      <AssetModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        assetToEdit={assetToEdit}
-        onSaved={fetchAssets}
-      />
-
       {/* Supporting Slide-Out Detailed Drawer */}
       <AssetDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
         asset={selectedAsset}
         onEdit={(a) => {
-          setAssetToEdit(a);
-          setIsModalOpen(true);
+          openModal('REGISTER_ASSET', a);
         }}
         onAllocate={handleQuickAllocate}
         onMaintenance={handleQuickMaintenance}

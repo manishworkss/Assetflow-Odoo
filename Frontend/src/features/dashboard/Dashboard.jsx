@@ -56,6 +56,10 @@ export const Dashboard = () => {
 
   useEffect(() => {
     fetchDashboardData();
+    
+    const handleRefresh = () => fetchDashboardData(true);
+    window.addEventListener('REFRESH_DATA', handleRefresh);
+    return () => window.removeEventListener('REFRESH_DATA', handleRefresh);
   }, [user?.role]);
 
   const handleSendReminder = async (allocationId, employeeName) => {
