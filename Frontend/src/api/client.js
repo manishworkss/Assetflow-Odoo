@@ -48,8 +48,9 @@ apiClient.interceptors.response.use(
     // Auth endpoints (login, signup, verify-otp, resend-otp) — NEVER auto-redirect on 401.
     // A 401 here means wrong credentials, not an expired session.
     const isAuthEndpoint = requestUrl.includes('/auth/');
+    const isAuthPage = window.location.pathname.includes('/login') || window.location.pathname.includes('/signup');
 
-    if (status === 401 && !isAuthEndpoint) {
+    if (status === 401 && !isAuthEndpoint && !isAuthPage) {
       // Session token expired on a protected route — log out and redirect
       useAuthStore.getState().logout();
       useUiStore.getState().showToast('Session expired. Please log in again.', 'warning');

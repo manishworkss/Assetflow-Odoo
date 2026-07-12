@@ -102,6 +102,8 @@ public class AuthServiceImpl implements AuthService {
 
         // Dispatch 6-digit OTP verification code via email
         emailService.sendOtpVerificationEmail(user.getEmail(), user.getName(), otpCode);
+        
+        System.out.println("====== DEV MODE: OTP GENERATED ====== -> " + otpCode);
 
         return "Verification code sent to " + user.getEmail();
     }
@@ -240,6 +242,8 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(user);
 
         emailService.sendOtpVerificationEmail(user.getEmail(), user.getName(), newOtpCode);
+        
+        System.out.println("====== DEV MODE: RESEND OTP ====== -> " + newOtpCode);
 
         return "A new verification code has been sent to " + user.getEmail();
     }
@@ -257,6 +261,8 @@ public class AuthServiceImpl implements AuthService {
         // Ideally send an email with the reset link. 
         // We will just send the token via email for now, similar to OTP.
         emailService.sendOtpVerificationEmail(user.getEmail(), user.getName(), resetToken);
+        
+        System.out.println("====== DEV MODE: RESET TOKEN ====== -> " + resetToken);
 
         return "Password reset instructions have been sent to your email";
     }
