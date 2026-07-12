@@ -17,6 +17,11 @@ import { Allocations } from './features/allocations/Allocations';
 import { ResourceBooking } from './features/bookings/ResourceBooking';
 import { MaintenanceKanban } from './features/maintenance/MaintenanceKanban';
 
+// Phase 4 Screens
+import { AuditCycle } from './features/audits/AuditCycle';
+import { AnalyticsReports } from './features/reports/AnalyticsReports';
+import { ActivityLogs } from './features/notifications/ActivityLogs';
+
 export function App() {
   const { isAuthenticated, initializeAuth } = useAuthStore();
   const { darkMode } = useUiStore();
@@ -68,10 +73,10 @@ export function App() {
           <Route path="bookings" element={<ResourceBooking />} />
           <Route path="maintenance" element={<MaintenanceKanban />} />
 
-          {/* Placeholders for upcoming Phase 4 routes */}
-          <Route path="audits" element={<div className="p-8 text-center text-slate-500 font-bold">Q2/Q3 Audit Verification Module Loading...</div>} />
-          <Route path="analytics" element={<div className="p-8 text-center text-slate-500 font-bold">Executive Analytics Module Loading...</div>} />
-          <Route path="activity-logs" element={<div className="p-8 text-center text-slate-500 font-bold">System Activity Logs Module Loading...</div>} />
+          {/* Phase 4 Audits, Analytics & Logs */}
+          <Route path="audits" element={<AuditCycle />} />
+          <Route path="analytics" element={<AnalyticsReports />} />
+          <Route path="activity-logs" element={<ActivityLogs />} />
 
           {/* Catch-all redirect to Dashboard */}
           <Route path="*" element={<Navigate to="/" replace />} />
