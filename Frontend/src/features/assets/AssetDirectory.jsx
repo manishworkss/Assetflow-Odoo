@@ -7,7 +7,6 @@ import { Button } from '../../components/common/Button';
 import { Badge } from '../../components/common/Badge';
 import { AssetModal } from './AssetModal';
 import { AssetDrawer } from './AssetDrawer';
-import QRScanner from '../../components/common/QRScanner';
 import {
   Search,
   Filter,
@@ -22,8 +21,7 @@ import {
   Trash2,
   LayoutGrid,
   List,
-  RefreshCw,
-  QrCode
+  RefreshCw
 } from 'lucide-react';
 
 export const AssetDirectory = () => {
@@ -43,7 +41,6 @@ export const AssetDirectory = () => {
   const [assetToEdit, setAssetToEdit] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState(null);
-  const [isScannerOpen, setIsScannerOpen] = useState(false);
 
   const fetchAssets = async () => {
     setLoading(true);
@@ -78,17 +75,6 @@ export const AssetDirectory = () => {
 
   const handleQuickAllocate = (asset) => {
     showToast(`Initiating Check-out workflow for ${asset.assetTag}...`, 'info');
-  };
-
-  const handleScanSuccess = async (tag) => {
-    setIsScannerOpen(false);
-    try {
-      const asset = await assetService.getAssetByTag(tag);
-      setSelectedAsset(asset);
-      setIsDrawerOpen(true);
-    } catch (err) {
-      showToast('Asset not found or invalid QR code', 'error');
-    }
   };
 
   // Filtered Assets list
@@ -151,14 +137,6 @@ export const AssetDirectory = () => {
               Register Asset Profile
             </Button>
           )}
-          <Button
-            variant="outline"
-            icon={QrCode}
-            onClick={() => setIsScannerOpen(true)}
-            className="ml-2"
-          >
-            Scan QR
-          </Button>
         </div>
       </div>
 
@@ -418,13 +396,6 @@ export const AssetDirectory = () => {
         onAllocate={handleQuickAllocate}
         onMaintenance={handleQuickMaintenance}
       />
-
-      {isScannerOpen && (
-        <QRScanner
-          onScanSuccess={handleScanSuccess}
-          onClose={() => setIsScannerOpen(false)}
-        />
-      )}
     </div>
   );
 };

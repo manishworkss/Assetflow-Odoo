@@ -1,6 +1,5 @@
 import React from 'react';
 import { Drawer } from '../../components/common/Drawer';
-import AssetQRCode from '../../components/common/AssetQRCode';
 import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
 import { useAuthStore } from '../../store/authStore';
@@ -114,20 +113,6 @@ export const AssetDrawer = ({ isOpen, onClose, asset, onEdit, onAllocate, onMain
           >
             QR Code
           </Button>
-        </div>
-
-        {/* QR & Barcode Section */}
-        <div className="bg-slate-50 dark:bg-slate-900/60 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 flex items-center justify-between">
-          <div>
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Scannable Asset Tag</p>
-            <p className="text-sm font-mono font-extrabold text-slate-900 dark:text-white mt-0.5">
-              {asset.assetTag} • {asset.serialNumber || 'SN-UNKNOWN'}
-            </p>
-            <span className="text-[10px] text-slate-400">Scan via mobile camera or barcode gun for instant audits</span>
-          </div>
-          <div className="w-24 h-24 bg-white rounded-xl border border-slate-300 flex items-center justify-center p-1.5 shadow-2xs">
-            <AssetQRCode assetTag={asset.assetTag} size={80} />
-          </div>
         </div>
 
         {/* Specifications Grid */}
