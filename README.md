@@ -522,7 +522,7 @@ This project is built for the **Odoo Combat Hackathon 2026**. All rights reserve
 ---
 
 <p align="center">
-  <strong>Built with ❤️ by the AssetFlow Team</strong>
+  <strong>Built by AlphaVoid Team</strong>
   <br />
   <a href="https://github.com/manishworkss/Assetflow-Odoo">⭐ Star this repo</a> •
   <a href="https://github.com/manishworkss/Assetflow-Odoo/issues">🐛 Report Bug</a> •
