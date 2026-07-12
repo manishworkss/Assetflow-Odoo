@@ -36,6 +36,19 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    // Generate JWT token directly from username/email (for OTP & OAuth)
+    public String generateTokenFromUsername(String username) {
+        Date currentDate = new Date();
+        Date expireDate = new Date(currentDate.getTime() + jwtExpirationDate);
+
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(expireDate)
+                .signWith(key())
+                .compact();
+    }
+
     private Key key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }

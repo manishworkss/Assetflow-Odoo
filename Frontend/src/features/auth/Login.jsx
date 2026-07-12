@@ -29,28 +29,21 @@ export const Login = () => {
     }
   };
 
-  const handleQuickDemoLogin = async (demoEmail, demoName, roleLabel) => {
-    setEmail(demoEmail);
-    setPassword('admin2026');
-    setLoading(true);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const handleGoogleLogin = async () => {
+    setGoogleLoading(true);
     try {
-      const { token, user } = await authService.login(demoEmail, 'admin2026');
+      const { token, user } = await authService.googleLogin();
       login(user, token, true);
-      showToast(`Logged in as ${user.name} (${roleLabel})`, 'success');
+      showToast(`Signed in with Google OAuth 2.0 as ${user.name}!`, 'success');
       navigate('/');
     } catch (err) {
-      showToast('Could not load profile', 'error');
+      showToast(err.message || 'Google OAuth Sign-In failed.', 'error');
     } finally {
-      setLoading(false);
+      setGoogleLoading(false);
     }
   };
-
-  const demoAccounts = [
-    { name: 'Marcus Sterling', email: 'marcus.s@assetflow.com', role: 'ADMIN', badge: 'bg-purple-100 text-purple-800' },
-    { name: 'Sarah Jenkins', email: 'sarah.j@assetflow.com', role: 'ASSET_MANAGER', badge: 'bg-indigo-100 text-indigo-800' },
-    { name: 'David Chen', email: 'david.c@assetflow.com', role: 'DEPARTMENT_HEAD', badge: 'bg-cyan-100 text-cyan-800' },
-    { name: 'Elena Rostova', email: 'elena.r@assetflow.com', role: 'EMPLOYEE', badge: 'bg-slate-100 text-slate-800' },
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-[#1E192A] to-[#2B1B38] flex items-center justify-center p-4 sm:p-6 font-sans">
@@ -164,36 +157,34 @@ export const Login = () => {
             </Button>
           </form>
 
-          {/* Role Profiles Quick Evaluation Section */}
-          <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700/80">
-            <div className="flex items-center gap-2 mb-3">
-              <Sparkles className="w-4 h-4 text-[#714B67] dark:text-purple-400" />
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
-                1-Click Role Profiles for Evaluation
-              </span>
-            </div>
-            <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
-              {demoAccounts.map((account) => (
-                <button
-                  key={account.role}
-                  type="button"
-                  onClick={() => handleQuickDemoLogin(account.email, account.name, account.role)}
-                  className="flex flex-col items-start p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-[#714B67] dark:hover:border-purple-500 hover:bg-purple-50/50 dark:hover:bg-purple-950/20 text-left transition-all group"
-                >
-                  <div className="flex items-center justify-between w-full mb-1">
-                    <span className="font-semibold text-xs text-slate-800 dark:text-slate-200 group-hover:text-[#714B67] dark:group-hover:text-purple-300 truncate">
-                      {account.name}
-                    </span>
-                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${account.badge}`}>
-                      {account.role}
-                    </span>
-                  </div>
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400 truncate w-full">
-                    {account.email}
-                  </span>
-                </button>
-              ))}
-            </div>
+          {/* Google OAuth 2.0 Integration */}
+          <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700/80">
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              disabled={googleLoading}
+              className="w-full flex items-center justify-center gap-3 px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-slate-700 dark:text-slate-200 rounded-xl text-sm font-semibold shadow-xs transition-all cursor-pointer"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24">
+                <path
+                  fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                />
+                <path
+                  fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                />
+                <path
+                  fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                />
+              </svg>
+              {googleLoading ? 'Connecting to Google OAuth 2.0...' : 'Continue with Google (OAuth 2.0)'}
+            </button>
           </div>
 
           <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
