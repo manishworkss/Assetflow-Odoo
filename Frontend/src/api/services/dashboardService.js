@@ -67,6 +67,21 @@ export const dashboardService = {
 
       return {
         role,
+        totalAssets: totalAssetsCount,
+        allocatedAssets: allocatedAssetsCount,
+        availableAssets: availableAssetsCount,
+        inMaintenanceAssets: maintenanceCount,
+        overdueAllocations: overdueAssets,
+        pendingMaintenanceTickets: repairs.filter((r) => r.status === 'PENDING' || r.status === 'IN_PROGRESS').length,
+        monthlyActivity: [
+          { month: 'Jan', allocations: 14, maintenance: 3 },
+          { month: 'Feb', allocations: 22, maintenance: 5 },
+          { month: 'Mar', allocations: 18, maintenance: 2 },
+          { month: 'Apr', allocations: 29, maintenance: 6 },
+          { month: 'May', allocations: 34, maintenance: 4 },
+          { month: 'Jun', allocations: 31, maintenance: 3 }
+        ],
+        departmentStats: departmentBreakdown,
         kpis: {
           totalAssets: totalAssetsCount,
           allocatedAssets: allocatedAssetsCount,
@@ -91,5 +106,9 @@ export const dashboardService = {
       };
     }
     return apiClient.get('/dashboard');
+  },
+
+  getStats: async () => {
+    return dashboardService.getDashboardSummary();
   }
 };
