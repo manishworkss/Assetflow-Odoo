@@ -1,7 +1,9 @@
 package com.assetflow.backend.config;
 
 import com.assetflow.backend.entity.Department;
+import com.assetflow.backend.entity.AssetCategory;
 import com.assetflow.backend.repository.DepartmentRepository;
+import com.assetflow.backend.repository.AssetCategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.assetflow.backend.repository.UserRepository;
@@ -20,6 +22,9 @@ public class DataInitializer implements CommandLineRunner {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private AssetCategoryRepository categoryRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -48,6 +53,27 @@ public class DataInitializer implements CommandLineRunner {
                 }
             }
             logger.info("Successfully initialized {} core departments.", departmentRepository.count());
+        }
+
+        if (categoryRepository.count() == 0) {
+            logger.info("Initializing core asset categories...");
+            List<String> coreCategories = Arrays.asList(
+                "Laptops & Compute",
+                "Heavy Machinery",
+                "Fleet Vehicles",
+                "Conference Rooms",
+                "Networking Infrastructure"
+            );
+
+            for (String catName : coreCategories) {
+                if (categoryRepository.findByName(catName).isEmpty()) {
+                    AssetCategory c = new AssetCategory();
+                    c.setName(catName);
+                    c.setDescription("Category for " + catName);
+                    categoryRepository.save(c);
+                }
+            }
+            logger.info("Successfully initialized {} asset categories.", categoryRepository.count());
         }
 
         if (userRepository.findByEmail("admin@assetflow.com").isEmpty()) {

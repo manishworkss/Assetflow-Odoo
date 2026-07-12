@@ -79,13 +79,22 @@ export const AssetDirectory = () => {
 
   // Filtered Assets list
   const filteredAssets = assets.filter((asset) => {
+    const searchLow = searchQuery.toLowerCase();
     const matchesSearch =
-      asset.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      asset.assetTag?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      asset.serialNumber?.toLowerCase().includes(searchQuery.toLowerCase());
+      (asset.name || '').toLowerCase().includes(searchLow) ||
+      (asset.assetTag || '').toLowerCase().includes(searchLow) ||
+      (asset.serialNumber || '').toLowerCase().includes(searchLow);
 
-    const matchesCategory = selectedCategory === 'ALL' || asset.category === selectedCategory;
-    const matchesDepartment = selectedDepartment === 'ALL' || asset.departmentName === selectedDepartment;
+    // Support both the exact category name from backend and the shortened one from mock
+    const matchesCategory = selectedCategory === 'ALL' || 
+      asset.categoryName === selectedCategory || 
+      (asset.categoryName && asset.categoryName.includes(selectedCategory)) ||
+      asset.category === selectedCategory;
+
+    const matchesDepartment = selectedDepartment === 'ALL' || 
+      asset.departmentName === selectedDepartment ||
+      (asset.departmentName && asset.departmentName.includes(selectedDepartment));
+
     const matchesStatus = selectedStatus === 'ALL' || asset.status === selectedStatus;
 
     return matchesSearch && matchesCategory && matchesDepartment && matchesStatus;
@@ -249,7 +258,7 @@ export const AssetDirectory = () => {
                       </div>
                     </td>
                     <td className="py-3.5 px-4 text-slate-600 dark:text-slate-300 font-medium text-xs">
-                      {asset.category}
+                      {asset.categoryName || asset.category}
                     </td>
                     <td className="py-3.5 px-4 text-slate-500 dark:text-slate-400 text-xs">
                       {asset.departmentName}
@@ -353,7 +362,7 @@ export const AssetDirectory = () => {
                   {asset.name}
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                  Category: <strong className="text-slate-700 dark:text-slate-300">{asset.category}</strong>
+                  Category: <strong className="text-slate-700 dark:text-slate-300">{asset.categoryName || asset.category}</strong>
                 </p>
               </div>
 
