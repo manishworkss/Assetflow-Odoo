@@ -55,8 +55,19 @@ public class AuthServiceImpl implements AuthService {
             throw new ConflictException("Email already exists.");
         }
 
-        Department department = departmentRepository.findById(signupDto.getDepartmentId())
-                .orElseThrow(() -> new ResourceNotFoundException("Department not found with ID: " + signupDto.getDepartmentId()));
+        Department department = null;
+        if (signupDto.getDepartmentId() != null) {
+            department = departmentRepository.findById(signupDto.getDepartmentId()).orElse(null);
+        }
+        if (department == null) {
+            department = departmentRepository.findAll().stream().findFirst()
+                    .orElseGet(() -> {
+                        Department d = new Department();
+                        d.setName("Engineering & IT");
+                        d.setDescription("Core Enterprise IT Department");
+                        return departmentRepository.save(d);
+                    });
+        }
 
         String otpCode = String.format("%06d", new SecureRandom().nextInt(1000000));
 
@@ -152,9 +163,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public JwtAuthResponse googleAuth(GoogleAuthDto googleAuthDto) {
         User user = userRepository.findByEmail(googleAuthDto.getEmail()).orElseGet(() -> {
-            Department defaultDept = departmentRepository.findById(101L).orElseGet(() -> {
+            Department defaultDept = departmentRepository.findAll().stream().findFirst().orElseGet(() -> {
                 Department d = new Department();
                 d.setName("Engineering & IT");
+                d.setDescription("Core Enterprise IT Department");
                 return departmentRepository.save(d);
             });
 
