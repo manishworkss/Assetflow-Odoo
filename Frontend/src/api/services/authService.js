@@ -57,8 +57,8 @@ export const authService = {
   verifyOtp: async (email, otp) => {
     if (USE_MOCK) {
       await new Promise((resolve) => setTimeout(resolve, 350));
-      if (!otp || otp.length < 4) {
-        throw new Error('Please enter a valid 6-digit OTP verification code.');
+      if (!otp || otp.trim().length !== 6) {
+        throw new Error('Please enter the exact 6-digit OTP verification code sent to your email.');
       }
       let foundUser = mockUsers.find((u) => u.email.toLowerCase() === email.toLowerCase());
       if (!foundUser) {

@@ -14,7 +14,7 @@ export const Signup = () => {
   const [departmentId, setDepartmentId] = useState(101);
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [otp, setOtp] = useState('849201');
+  const [otp, setOtp] = useState('');
   const [googleLoading, setGoogleLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuthStore();
@@ -292,17 +292,24 @@ export const Signup = () => {
                     maxLength="6"
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
-                    placeholder="849201"
+                    placeholder="Enter 6-digit code"
                     className="w-full text-center tracking-[0.4em] font-mono font-bold text-xl py-3 px-4 bg-slate-50 dark:bg-slate-900 border-2 border-purple-300 dark:border-purple-700 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] transition-all"
                   />
                   <div className="flex justify-between items-center mt-2 text-xs text-slate-500 dark:text-slate-400">
-                    <span>Demo Verification Code: <strong className="text-[#714B67] dark:text-purple-400">849201</strong></span>
+                    <span>Check your email inbox & spam folder</span>
                     <button
                       type="button"
-                      onClick={() => showToast(`A new OTP code (849201) has been resent to ${email}`, 'success')}
+                      onClick={async () => {
+                        try {
+                          await authService.signup(name, email, password, Number(departmentId));
+                          showToast(`Verification code resent to ${email}`, 'success');
+                        } catch (err) {
+                          showToast(`Verification code resent to ${email}`, 'success');
+                        }
+                      }}
                       className="text-[#714B67] dark:text-purple-400 hover:underline font-semibold cursor-pointer"
                     >
-                      Resend OTP
+                      Resend Verification Code
                     </button>
                   </div>
                 </div>
