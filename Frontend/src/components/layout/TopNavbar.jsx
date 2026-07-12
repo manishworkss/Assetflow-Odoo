@@ -19,12 +19,6 @@ export const TopNavbar = () => {
   const { user, setRole, logout } = useAuthStore();
   const { darkMode, toggleDarkMode, openModal, toggleSidebar } = useUiStore();
 
-  const availableRoles = [
-    { code: 'ADMIN', label: 'Admin (Full Access)' },
-    { code: 'ASSET_MANAGER', label: 'Asset Manager' },
-    { code: 'DEPARTMENT_HEAD', label: 'Department Head' },
-    { code: 'EMPLOYEE', label: 'Employee' }
-  ];
 
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 sm:px-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs">
@@ -47,22 +41,13 @@ export const TopNavbar = () => {
 
       {/* Right Section: Role Switcher & Action Tools */}
       <div className="flex items-center gap-3 sm:gap-4">
-        {/* Role Switcher Dropdown */}
+        {/* Role Display */}
         <div className="flex items-center gap-2 bg-purple-50 dark:bg-purple-950/40 px-3 py-1.5 rounded-xl border border-purple-200 dark:border-purple-800/60 shadow-2xs">
           <Sparkles className="w-4 h-4 text-[#714B67] dark:text-purple-400 hidden sm:block" />
-          <span className="text-xs font-semibold text-[#714B67] dark:text-purple-300 hidden md:inline">Active Role:</span>
-          <select
-            value={user?.role || 'ADMIN'}
-            onChange={(e) => setRole(e.target.value)}
-            className="text-xs font-bold bg-transparent text-[#714B67] dark:text-purple-200 focus:outline-none cursor-pointer pr-1"
-            title="Elevate or adjust role permissions across screens"
-          >
-            {availableRoles.map((r) => (
-              <option key={r.code} value={r.code} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
-                {r.label}
-              </option>
-            ))}
-          </select>
+          <span className="text-xs font-semibold text-[#714B67] dark:text-purple-300 hidden md:inline">Role:</span>
+          <span className="text-xs font-bold text-[#714B67] dark:text-purple-200">
+            {user?.role ? user.role.replace('_', ' ') : 'EMPLOYEE'}
+          </span>
         </div>
 
         {/* Quick Action + Asset Registration Button */}
