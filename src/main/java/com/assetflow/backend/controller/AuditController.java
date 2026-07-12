@@ -56,5 +56,10 @@ public class AuditController {
         return new ResponseEntity<>(ApiResponse.success("Audit record logged successfully", savedRecord), HttpStatus.CREATED);
     }
 
-   
+    @PreAuthorize("hasRole('ADMIN') or hasRole('AUDITOR') or hasRole('ASSET_MANAGER')")
+    @GetMapping("/{id}/records")
+    public ResponseEntity<ApiResponse<List<AuditRecordDto>>> getRecordsForCycle(@PathVariable("id") Long id) {
+        List<AuditRecordDto> records = auditService.getRecordsForCycle(id);
+        return ResponseEntity.ok(ApiResponse.success("Audit records retrieved successfully", records));
+    }
 }

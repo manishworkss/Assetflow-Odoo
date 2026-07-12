@@ -18,6 +18,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+/**
+ * Implementation of the {@link AssetService} interface.
+ * Handles the business logic for standard CRUD operations on assets.
+ */
 public class AssetServiceImpl implements AssetService {
 
     @Autowired

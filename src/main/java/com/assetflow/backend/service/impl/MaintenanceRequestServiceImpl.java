@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+/**
+ * Implementation of the {@link MaintenanceRequestService} interface.
+ * Handles the business logic for creating and resolving maintenance requests for assets.
+ */
 public class MaintenanceRequestServiceImpl implements MaintenanceRequestService {
 
     @Autowired

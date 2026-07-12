@@ -23,6 +23,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+/**
+ * Implementation of the {@link AuditService} interface.
+ * Handles the business logic for managing audit cycles and their corresponding audit records.
+ */
 public class AuditServiceImpl implements AuditService {
 
     @Autowired
