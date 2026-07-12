@@ -17,6 +17,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Data Transfer Object for Maintenance Request.
+ * Carries data between processes for maintenance request operations.
+ */
 public class MaintenanceRequestDto {
     private Long id;
 

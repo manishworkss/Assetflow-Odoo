@@ -18,6 +18,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Data Transfer Object for Resource Booking.
+ * Carries data between processes for resource booking operations.
+ */
 public class ResourceBookingDto {
     private Long id;
 

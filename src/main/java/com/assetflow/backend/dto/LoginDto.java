@@ -11,6 +11,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+/**
+ * Data Transfer Object for Login.
+ * Carries the user's login credentials.
+ */
 public class LoginDto {
 
     @NotEmpty(message = "Email is required")

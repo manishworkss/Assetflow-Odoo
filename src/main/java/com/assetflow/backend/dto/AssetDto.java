@@ -17,6 +17,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Data Transfer Object for Asset.
+ * Carries data between processes for asset operations.
+ */
 public class AssetDto {
     private Long id;
 

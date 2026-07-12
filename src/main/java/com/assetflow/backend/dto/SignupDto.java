@@ -12,6 +12,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+/**
+ * Data Transfer Object for User Signup.
+ * Carries the information needed to register a new user.
+ */
 public class SignupDto {
 
     @NotEmpty(message = "Name is required")

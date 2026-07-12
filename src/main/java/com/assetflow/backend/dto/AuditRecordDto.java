@@ -15,6 +15,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Data Transfer Object for Audit Record.
+ * Carries data between processes for audit record operations.
+ */
 public class AuditRecordDto {
     private Long id;
 

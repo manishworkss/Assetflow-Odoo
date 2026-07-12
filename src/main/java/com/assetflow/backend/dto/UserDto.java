@@ -12,6 +12,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Data Transfer Object for User.
+ * Carries user data between processes, omitting sensitive information like passwords.
+ */
 public class UserDto {
     private Long id;
     private String name;

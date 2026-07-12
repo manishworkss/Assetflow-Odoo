@@ -12,6 +12,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Data Transfer Object for Asset Category.
+ * Carries data between processes for asset category operations.
+ */
 public class AssetCategoryDto {
     private Long id;
 

@@ -15,6 +15,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Data Transfer Object for Asset Allocation.
+ * Carries data between processes for asset allocation operations.
+ */
 public class AssetAllocationDto {
     private Long id;
 
