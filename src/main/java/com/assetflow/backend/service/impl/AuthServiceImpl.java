@@ -6,6 +6,8 @@ import com.assetflow.backend.dto.VerifyOtpDto;
 import com.assetflow.backend.dto.GoogleAuthDto;
 import com.assetflow.backend.dto.UserDto;
 import com.assetflow.backend.dto.JwtAuthResponse;
+import com.assetflow.backend.dto.ForgotPasswordDto;
+import com.assetflow.backend.dto.ResetPasswordDto;
 import com.assetflow.backend.entity.Department;
 import com.assetflow.backend.entity.User;
 import com.assetflow.backend.enums.Role;
@@ -94,11 +96,7 @@ public class AuthServiceImpl implements AuthService {
         user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(10));
         user.setVerified(false);
 
-        try {
-            user.setRole(Role.valueOf(signupDto.getRole().toUpperCase()));
-        } catch (Exception e) {
-            user.setRole(Role.EMPLOYEE);
-        }
+        user.setRole(Role.EMPLOYEE);
 
         userRepository.save(user);
 
@@ -244,5 +242,43 @@ public class AuthServiceImpl implements AuthService {
         emailService.sendOtpVerificationEmail(user.getEmail(), user.getName(), newOtpCode);
 
         return "A new verification code has been sent to " + user.getEmail();
+    }
+
+    @Override
+    public String forgotPassword(ForgotPasswordDto forgotPasswordDto) {
+        User user = userRepository.findByEmail(forgotPasswordDto.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("No account found for email: " + forgotPasswordDto.getEmail()));
+
+        String resetToken = java.util.UUID.randomUUID().toString();
+        user.setVerificationCode(resetToken);
+        user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(15));
+        userRepository.save(user);
+
+        // Ideally send an email with the reset link. 
+        // We will just send the token via email for now, similar to OTP.
+        emailService.sendOtpVerificationEmail(user.getEmail(), user.getName(), resetToken);
+
+        return "Password reset instructions have been sent to your email";
+    }
+
+    @Override
+    public String resetPassword(ResetPasswordDto resetPasswordDto) {
+        User user = userRepository.findByEmail(resetPasswordDto.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("No account found for email: " + resetPasswordDto.getEmail()));
+
+        if (user.getVerificationCode() == null || !user.getVerificationCode().equals(resetPasswordDto.getToken())) {
+            throw new IllegalArgumentException("Invalid reset token");
+        }
+
+        if (user.getVerificationCodeExpiresAt() != null && user.getVerificationCodeExpiresAt().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Reset token has expired");
+        }
+
+        user.setPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));
+        user.setVerificationCode(null);
+        user.setVerificationCodeExpiresAt(null);
+        userRepository.save(user);
+
+        return "Password has been successfully reset";
     }
 }

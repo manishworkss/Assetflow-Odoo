@@ -33,7 +33,7 @@ public class DashboardServiceImpl implements DashboardService {
     private final ResourceBookingRepository resourceBookingRepository;
     private final AuditCycleRepository auditCycleRepository;
     private final DepartmentRepository departmentRepository;
-    private final AssetCategoryRepository assetCategoryRepository;
+
 
     @Override
     public DashboardStatsDto getDashboardStats() {
