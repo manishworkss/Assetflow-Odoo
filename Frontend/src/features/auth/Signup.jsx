@@ -16,6 +16,8 @@ export const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState('');
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [isFetchingDepts, setIsFetchingDepts] = useState(true);
+  const [deptError, setDeptError] = useState(null);
   const [resendLoading, setResendLoading] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
   const navigate = useNavigate();
@@ -26,13 +28,20 @@ export const Signup = () => {
   useEffect(() => {
     const fetchDepts = async () => {
       try {
+        setIsFetchingDepts(true);
+        setDeptError(null);
         const data = await departmentService.getDepartments();
-        if (data && data.length > 0) {
+        if (data) {
           setDepartments(data);
-          setDepartmentId(String(data[0].id)); // default to first real department ID
+          if (data.length > 0) {
+            setDepartmentId(String(data[0].id)); // default to first real department ID
+          }
         }
       } catch (err) {
         console.error('Failed to fetch departments:', err);
+        setDeptError(err.message || 'Failed to load departments');
+      } finally {
+        setIsFetchingDepts(false);
       }
     };
     fetchDepts();
@@ -250,10 +259,16 @@ export const Signup = () => {
                       onChange={(e) => setDepartmentId(e.target.value)}
                       className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] transition-all appearance-none cursor-pointer"
                     >
-                      {departments.length === 0 && (
+                      {isFetchingDepts && (
                         <option value="" disabled>Loading departments...</option>
                       )}
-                      {departments.map((d) => (
+                      {!isFetchingDepts && deptError && (
+                        <option value="" disabled>Error: {deptError}</option>
+                      )}
+                      {!isFetchingDepts && !deptError && departments.length === 0 && (
+                        <option value="" disabled>No departments available</option>
+                      )}
+                      {!isFetchingDepts && departments.map((d) => (
                         <option key={d.id} value={d.id}>
                           {d.name}
                         </option>
