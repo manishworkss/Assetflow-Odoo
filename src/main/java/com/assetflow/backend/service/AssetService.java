@@ -3,6 +3,10 @@ package com.assetflow.backend.service;
 import com.assetflow.backend.dto.AssetDto;
 import java.util.List;
 
+/**
+ * Service interface for managing assets.
+ * Defines business logic methods for CRUD operations on assets.
+ */
 public interface AssetService {
     AssetDto createAsset(AssetDto assetDto);
     AssetDto getAssetById(Long id);

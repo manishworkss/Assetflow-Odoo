@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+/**
+ * Implementation of the {@link AssetCategoryService} interface.
+ * Handles the business logic for managing asset categories.
+ */
 public class AssetCategoryServiceImpl implements AssetCategoryService {
 
     @Autowired

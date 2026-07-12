@@ -19,6 +19,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+/**
+ * Implementation of the {@link ResourceBookingService} interface.
+ * Handles the business logic for booking resources, checking availability, and managing bookings.
+ */
 public class ResourceBookingServiceImpl implements ResourceBookingService {
 
     @Autowired
