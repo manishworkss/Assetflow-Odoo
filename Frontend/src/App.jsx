@@ -1,122 +1,77 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuthStore } from './store/authStore';
+import { useUiStore } from './store/uiStore';
+import { AppLayout } from './components/layout/AppLayout';
+import { RoleGuard } from './components/layout/RoleGuard';
 
-function App() {
-  const [count, setCount] = useState(0)
+// Phase 2 Screens
+import { Login } from './features/auth/Login';
+import { Signup } from './features/auth/Signup';
+import { Dashboard } from './features/dashboard/Dashboard';
+import { OrgSetup } from './features/organization/OrgSetup';
+import { AssetDirectory } from './features/assets/AssetDirectory';
+
+export function App() {
+  const { isAuthenticated, initializeAuth } = useAuthStore();
+  const { darkMode } = useUiStore();
+
+  useEffect(() => {
+    initializeAuth();
+  }, [initializeAuth]);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+    <BrowserRouter>
+      <Routes>
+        {/* Public Authentication Routes */}
+        <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" replace />} />
+        <Route path="/signup" element={!isAuthenticated ? <Signup /> : <Navigate to="/" replace />} />
+
+        {/* Protected Enterprise ERP Portal */}
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? <AppLayout /> : <Navigate to="/login" replace />
+          }
         >
-          Count is {count}
-        </button>
-      </section>
+          {/* Operational Dashboard */}
+          <Route index element={<Dashboard />} />
 
-      <div className="ticks"></div>
+          {/* Asset Management & Catalog */}
+          <Route path="assets" element={<AssetDirectory />} />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+          {/* Organization & RBAC Setup (Admin / Head Only) */}
+          <Route
+            path="organization"
+            element={
+              <RoleGuard allowedRoles={['ADMIN', 'DEPARTMENT_HEAD']}>
+                <OrgSetup />
+              </RoleGuard>
+            }
+          />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+          {/* Placeholders for upcoming Phase 3 & 4 routes */}
+          <Route path="allocations" element={<div className="p-8 text-center text-slate-500 font-bold">Allocations Module Loading...</div>} />
+          <Route path="bookings" element={<div className="p-8 text-center text-slate-500 font-bold">Shared Resource Bookings Module Loading...</div>} />
+          <Route path="maintenance" element={<div className="p-8 text-center text-slate-500 font-bold">Maintenance Tickets Module Loading...</div>} />
+          <Route path="audits" element={<div className="p-8 text-center text-slate-500 font-bold">Q2/Q3 Audit Verification Module Loading...</div>} />
+          <Route path="analytics" element={<div className="p-8 text-center text-slate-500 font-bold">Executive Analytics Module Loading...</div>} />
+          <Route path="activity-logs" element={<div className="p-8 text-center text-slate-500 font-bold">System Activity Logs Module Loading...</div>} />
+
+          {/* Catch-all redirect to Dashboard */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
