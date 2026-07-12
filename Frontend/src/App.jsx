@@ -12,6 +12,11 @@ import { Dashboard } from './features/dashboard/Dashboard';
 import { OrgSetup } from './features/organization/OrgSetup';
 import { AssetDirectory } from './features/assets/AssetDirectory';
 
+// Phase 3 Screens
+import { Allocations } from './features/allocations/Allocations';
+import { ResourceBooking } from './features/bookings/ResourceBooking';
+import { MaintenanceKanban } from './features/maintenance/MaintenanceKanban';
+
 export function App() {
   const { isAuthenticated, initializeAuth } = useAuthStore();
   const { darkMode } = useUiStore();
@@ -58,10 +63,12 @@ export function App() {
             }
           />
 
-          {/* Placeholders for upcoming Phase 3 & 4 routes */}
-          <Route path="allocations" element={<div className="p-8 text-center text-slate-500 font-bold">Allocations Module Loading...</div>} />
-          <Route path="bookings" element={<div className="p-8 text-center text-slate-500 font-bold">Shared Resource Bookings Module Loading...</div>} />
-          <Route path="maintenance" element={<div className="p-8 text-center text-slate-500 font-bold">Maintenance Tickets Module Loading...</div>} />
+          {/* Phase 3 Advanced Workflows */}
+          <Route path="allocations" element={<Allocations />} />
+          <Route path="bookings" element={<ResourceBooking />} />
+          <Route path="maintenance" element={<MaintenanceKanban />} />
+
+          {/* Placeholders for upcoming Phase 4 routes */}
           <Route path="audits" element={<div className="p-8 text-center text-slate-500 font-bold">Q2/Q3 Audit Verification Module Loading...</div>} />
           <Route path="analytics" element={<div className="p-8 text-center text-slate-500 font-bold">Executive Analytics Module Loading...</div>} />
           <Route path="activity-logs" element={<div className="p-8 text-center text-slate-500 font-bold">System Activity Logs Module Loading...</div>} />
