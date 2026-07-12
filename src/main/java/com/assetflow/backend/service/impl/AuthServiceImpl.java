@@ -253,7 +253,7 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(forgotPasswordDto.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException("No account found for email: " + forgotPasswordDto.getEmail()));
 
-        String resetToken = java.util.UUID.randomUUID().toString();
+        String resetToken = String.valueOf(100000 + new java.util.Random().nextInt(900000));
         user.setVerificationCode(resetToken);
         user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(15));
         userRepository.save(user);

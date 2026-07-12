@@ -308,10 +308,11 @@ export const Login = () => {
                     <input
                       type="text"
                       required
+                      maxLength="6"
                       value={resetToken}
-                      onChange={(e) => setResetToken(e.target.value)}
-                      placeholder="Enter reset token"
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] transition-all tracking-widest"
+                      onChange={(e) => setResetToken(e.target.value.replace(/\D/g, ''))}
+                      placeholder="Enter 6-digit code"
+                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#714B67] transition-all tracking-widest text-center text-lg font-mono"
                     />
                   </div>
                 </div>
