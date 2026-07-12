@@ -15,6 +15,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Entity representing a maintenance request for an asset.
+ * Maps to the 'maintenance_requests' table in the database.
+ */
 public class MaintenanceRequest {
     
     @Id

@@ -13,6 +13,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Entity representing an audit record.
+ * Maps to the 'audit_records' table in the database.
+ */
 public class AuditRecord {
     
     @Id

@@ -4,19 +4,12 @@ import { create } from 'zustand';
 const storedToken = sessionStorage.getItem('assetflow_token') || localStorage.getItem('assetflow_token');
 const storedUser = sessionStorage.getItem('assetflow_user') || localStorage.getItem('assetflow_user');
 
-const initialUser = storedUser ? JSON.parse(storedUser) : {
-  id: 1,
-  name: 'Manish Kumar',
-  email: 'manish@assetflow.odoo',
-  role: 'ADMIN', // Default to ADMIN for instant full-access demoing
-  departmentId: 101,
-  departmentName: 'Engineering & IT'
-};
+const initialUser = storedUser ? JSON.parse(storedUser) : null;
 
 export const useAuthStore = create((set, get) => ({
   user: initialUser,
-  token: storedToken || 'mock-jwt-token-assetflow-2026',
-  isAuthenticated: true,
+  token: storedToken || null,
+  isAuthenticated: Boolean(storedToken && storedUser),
 
   initializeAuth: () => {
     const token = sessionStorage.getItem('assetflow_token') || localStorage.getItem('assetflow_token');
@@ -25,10 +18,10 @@ export const useAuthStore = create((set, get) => ({
       try {
         set({ token, user: JSON.parse(user), isAuthenticated: true });
       } catch (e) {
-        set({ user: initialUser, token: 'mock-jwt-token-assetflow-2026', isAuthenticated: true });
+        set({ user: null, token: null, isAuthenticated: false });
       }
     } else {
-      set({ user: initialUser, token: 'mock-jwt-token-assetflow-2026', isAuthenticated: true });
+      set({ user: null, token: null, isAuthenticated: false });
     }
   },
 
@@ -47,9 +40,17 @@ export const useAuthStore = create((set, get) => ({
     set({ user: null, token: null, isAuthenticated: false });
   },
 
-  // Hackathon Instant Role Switcher for live demos to judges
+  // Instant Role Switcher for profile elevation and evaluation
   setRole: (newRole) => {
-    const currentUser = get().user || initialUser;
+    const defaultAdmin = {
+      id: 1,
+      name: 'Marcus Sterling',
+      email: 'marcus.s@assetflow.com',
+      role: 'ADMIN',
+      departmentId: 101,
+      departmentName: 'Engineering & IT'
+    };
+    const currentUser = get().user || defaultAdmin;
     const updatedUser = { ...currentUser, role: newRole };
     localStorage.setItem('assetflow_user', JSON.stringify(updatedUser));
     sessionStorage.setItem('assetflow_user', JSON.stringify(updatedUser));

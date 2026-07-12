@@ -17,6 +17,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Entity representing an asset in the system.
+ * Maps to the 'assets' table in the database.
+ */
 public class Asset {
     
     @Id

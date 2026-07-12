@@ -1,22 +1,49 @@
 package com.assetflow.backend.config;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+/**
+ * Configuration class for OpenAPI (Swagger) documentation.
+ * This class configures the API documentation metadata and security schemes.
+ */
 public class OpenApiConfig {
 
     @Bean
+    /**
+     * Configures the OpenAPI documentation settings including API info, contact, license,
+     * and global security requirements.
+     * 
+     * @return the configured OpenAPI instance
+     */
     public OpenAPI assetFlowOpenAPI() {
         return new OpenAPI()
                 .info(new Info().title("AssetFlow API")
                         .description("API Documentation for AssetFlow Enterprise Asset & Resource Management System")
                         .version("v1.0.0")
-                        .contact(new Contact().name("Hackathon Team"))
-                        .license(new License().name("Apache 2.0").url("http://springdoc.org")));
+                        .contact(new Contact().name("AssetFlow Engineering Suite"))
+                        .license(new License().name("Apache 2.0").url("http://springdoc.org")))
+                .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
+                .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()));
+    }
+
+    /**
+     * Creates the security scheme for Bearer Token Authentication (JWT).
+     * 
+     * @return the configured SecurityScheme for JWT
+     */
+    private SecurityScheme createAPIKeyScheme() {
+        return new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP)
+                .bearerFormat("JWT")
+                .scheme("bearer");
     }
 }

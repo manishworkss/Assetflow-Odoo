@@ -11,6 +11,11 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+/**
+ * Generic API response wrapper to standardize the format of REST API responses.
+ * 
+ * @param <T> the type of the data payload
+ */
 public class ApiResponse<T> {
     private boolean success;
     private String message;

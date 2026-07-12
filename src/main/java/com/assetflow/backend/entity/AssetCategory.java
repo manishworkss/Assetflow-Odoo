@@ -14,6 +14,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Entity representing an asset category.
+ * Maps to the 'asset_categories' table in the database.
+ */
 public class AssetCategory {
     
     @Id

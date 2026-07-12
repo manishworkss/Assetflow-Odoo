@@ -14,6 +14,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Entity representing a department within the organization.
+ * Maps to the 'departments' table in the database.
+ */
 public class Department {
     
     @Id

@@ -15,6 +15,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Entity representing a user in the system.
+ * Maps to the 'users' table in the database.
+ */
 public class User {
     
     @Id

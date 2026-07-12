@@ -31,7 +31,7 @@ export const AppLayout = () => {
 
         {/* Global Footer */}
         <footer className="py-4 px-6 text-center text-xs text-slate-400 dark:text-slate-500 border-t border-slate-200/60 dark:border-slate-800/60">
-          AssetFlow ERP v1.0 • Odoo Hackathon 2026 • Engineered for seamless Spring Boot + MySQL + JWT Backend Integration
+          AssetFlow Enterprise ERP v2.4 • Corporate Asset & Resource Lifecycle Management Suite
         </footer>
       </div>
 

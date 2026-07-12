@@ -13,6 +13,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Entity representing an audit cycle.
+ * Maps to the 'audit_cycles' table in the database.
+ */
 public class AuditCycle {
     
     @Id

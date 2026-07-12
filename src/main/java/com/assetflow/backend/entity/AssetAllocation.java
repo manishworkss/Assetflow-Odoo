@@ -15,6 +15,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Entity representing an asset allocation to a user.
+ * Maps to the 'asset_allocations' table in the database.
+ */
 public class AssetAllocation {
     
     @Id

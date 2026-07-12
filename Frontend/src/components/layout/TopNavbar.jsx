@@ -47,15 +47,15 @@ export const TopNavbar = () => {
 
       {/* Right Section: Role Switcher & Action Tools */}
       <div className="flex items-center gap-3 sm:gap-4">
-        {/* Hackathon Instant Role Switcher Dropdown */}
+        {/* Role Switcher Dropdown */}
         <div className="flex items-center gap-2 bg-purple-50 dark:bg-purple-950/40 px-3 py-1.5 rounded-xl border border-purple-200 dark:border-purple-800/60 shadow-2xs">
-          <Sparkles className="w-4 h-4 text-[#714B67] dark:text-purple-400 animate-pulse hidden sm:block" />
-          <span className="text-xs font-semibold text-[#714B67] dark:text-purple-300 hidden md:inline">Demo Role:</span>
+          <Sparkles className="w-4 h-4 text-[#714B67] dark:text-purple-400 hidden sm:block" />
+          <span className="text-xs font-semibold text-[#714B67] dark:text-purple-300 hidden md:inline">Active Role:</span>
           <select
             value={user?.role || 'ADMIN'}
             onChange={(e) => setRole(e.target.value)}
             className="text-xs font-bold bg-transparent text-[#714B67] dark:text-purple-200 focus:outline-none cursor-pointer pr-1"
-            title="Switch role instantly to test RBAC live across screens!"
+            title="Elevate or adjust role permissions across screens"
           >
             {availableRoles.map((r) => (
               <option key={r.code} value={r.code} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
@@ -90,14 +90,14 @@ export const TopNavbar = () => {
         {/* User Profile & Logout */}
         <div className="flex items-center gap-2.5 pl-2 border-l border-slate-200 dark:border-slate-800">
           <div className="w-8 h-8 rounded-full bg-[#714B67] text-white font-bold text-xs flex items-center justify-center shadow-xs select-none">
-            {user?.name ? user.name.split(' ').map((n) => n[0]).join('') : 'MK'}
+            {user?.name ? user.name.split(' ').map((n) => n[0]).join('') : 'MS'}
           </div>
           <div className="hidden xl:flex flex-col text-left">
             <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 leading-tight">
-              {user?.name || 'Manish Kumar'}
+              {user?.name || 'Marcus Sterling'}
             </span>
             <span className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight">
-              {user?.email || 'manish@assetflow.odoo'}
+              {user?.email || 'marcus.s@assetflow.com'}
             </span>
           </div>
           <button

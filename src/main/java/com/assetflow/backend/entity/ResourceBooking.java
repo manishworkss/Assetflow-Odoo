@@ -15,6 +15,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+/**
+ * Entity representing a resource booking.
+ * Maps to the 'resource_bookings' table in the database.
+ */
 public class ResourceBooking {
     
     @Id

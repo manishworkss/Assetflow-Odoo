@@ -99,7 +99,7 @@ export const Sidebar = () => {
           {sidebarOpen && (
             <div className="flex flex-col">
               <span className="font-bold text-lg text-white tracking-tight leading-none">AssetFlow</span>
-              <span className="text-[10px] uppercase tracking-wider text-purple-300/70 font-semibold mt-1">Odoo Hackathon</span>
+              <span className="text-[10px] uppercase tracking-wider text-purple-300/70 font-semibold mt-1">Enterprise Edition</span>
             </div>
           )}
         </div>
