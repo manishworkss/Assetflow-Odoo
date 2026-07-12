@@ -4,6 +4,8 @@ import com.assetflow.backend.entity.Department;
 import com.assetflow.backend.repository.DepartmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.assetflow.backend.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,12 @@ public class DataInitializer implements CommandLineRunner {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -40,6 +48,19 @@ public class DataInitializer implements CommandLineRunner {
                 }
             }
             logger.info("Successfully initialized {} core departments.", departmentRepository.count());
+        }
+
+        if (userRepository.findByEmail("admin@assetflow.com").isEmpty()) {
+            logger.info("Initializing default system admin account...");
+            com.assetflow.backend.entity.User admin = new com.assetflow.backend.entity.User();
+            admin.setName("System Administrator");
+            admin.setEmail("admin@assetflow.com");
+            admin.setPassword(passwordEncoder.encode("admin123")); // Default password
+            admin.setRole(com.assetflow.backend.enums.Role.ADMIN);
+            admin.setVerified(true);
+            admin.setDepartment(departmentRepository.findAll().stream().findFirst().orElse(null));
+            userRepository.save(admin);
+            logger.info("Default admin account created: admin@assetflow.com");
         }
     }
 }
