@@ -26,6 +26,13 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.Collections;
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 @Service
 /**
@@ -51,6 +58,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private EmailService emailService;
+
+    @Value("${google.client.id}")
+    private String googleClientId;
 
     @Override
     public String signup(SignupDto signupDto) {
@@ -166,7 +176,26 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public JwtAuthResponse googleAuth(GoogleAuthDto googleAuthDto) {
-        User user = userRepository.findByEmail(googleAuthDto.getEmail()).orElseGet(() -> {
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+                .setAudience(Collections.singletonList(googleClientId))
+                .build();
+
+        GoogleIdToken idToken;
+        try {
+            idToken = verifier.verify(googleAuthDto.getCredential());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid Google credential token");
+        }
+
+        if (idToken == null) {
+            throw new IllegalArgumentException("Invalid Google credential token");
+        }
+
+        GoogleIdToken.Payload payload = idToken.getPayload();
+        String email = payload.getEmail();
+        String name = (String) payload.get("name");
+
+        User user = userRepository.findByEmail(email).orElseGet(() -> {
             Department defaultDept = departmentRepository.findAll().stream().findFirst().orElseGet(() -> {
                 Department d = new Department();
                 d.setName("Engineering & IT");
@@ -175,8 +204,8 @@ public class AuthServiceImpl implements AuthService {
             });
 
             User newUser = new User();
-            newUser.setName(googleAuthDto.getName() != null ? googleAuthDto.getName() : "Google Workspace User");
-            newUser.setEmail(googleAuthDto.getEmail());
+            newUser.setName(name != null ? name : "Google Workspace User");
+            newUser.setEmail(email);
             newUser.setPassword(passwordEncoder.encode("OAUTH_GOOGLE_" + System.currentTimeMillis()));
             newUser.setDepartment(defaultDept);
             newUser.setRole(Role.EMPLOYEE);

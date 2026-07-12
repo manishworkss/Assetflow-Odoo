@@ -91,30 +91,10 @@ export const authService = {
 
   /**
    * Aligned with POST /api/auth/google
-   * Google OAuth 2.0 Sign In / Sign Up
+   * Google OAuth 2.0 Sign In / Sign Up — sends credential (ID token) to backend for secure verification
    */
-  googleLogin: async (email = 'alex.rivera@assetflow.com', name = 'Alex Rivera (Google OAuth)') => {
-    if (USE_MOCK) {
-      await new Promise((resolve) => setTimeout(resolve, 450));
-      let foundUser = mockUsers.find((u) => u.email.toLowerCase() === email.toLowerCase());
-      if (!foundUser) {
-        foundUser = {
-          id: Date.now(),
-          name,
-          email,
-          role: 'EMPLOYEE',
-          departmentId: 101,
-          departmentName: 'Engineering & IT',
-          status: 'ACTIVE',
-        };
-        mockUsers.push(foundUser);
-      }
-      return {
-        token: `mock-jwt-token-google-${foundUser.id}-${Date.now()}`,
-        user: foundUser,
-      };
-    }
-    const response = await apiClient.post('/auth/google', { email, name, photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80' });
+  googleLogin: async (credential) => {
+    const response = await apiClient.post('/auth/google', { credential });
     return {
       token: response.accessToken,
       user: response.user
