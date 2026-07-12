@@ -23,6 +23,11 @@ import java.util.Arrays;
 
 @Configuration
 @EnableMethodSecurity
+/**
+ * Configuration class for Spring Security.
+ * This class sets up the security filter chain, authentication manager, password encoder,
+ * and configures stateless session management along with JWT filtering.
+ */
 public class SecurityConfig {
 
     @Autowired
@@ -35,16 +40,37 @@ public class SecurityConfig {
     private JwtAuthenticationFilter authenticationFilter;
 
     @Bean
+    /**
+     * Provides a PasswordEncoder bean for encoding and decoding passwords using BCrypt.
+     * 
+     * @return a BCryptPasswordEncoder instance
+     */
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
+    /**
+     * Provides the AuthenticationManager bean, required for handling user authentication.
+     * 
+     * @param configuration the AuthenticationConfiguration
+     * @return the AuthenticationManager instance
+     * @throws Exception if an error occurs while retrieving the authentication manager
+     */
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
     @Bean
+    /**
+     * Configures the security filter chain, including CORS/CSRF handling,
+     * authorized routes, exception handling, and stateless session management.
+     * It also registers the JWT authentication filter.
+     * 
+     * @param http the HttpSecurity to modify
+     * @return the configured SecurityFilterChain
+     * @throws Exception if an error occurs during configuration
+     */
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(csrf -> csrf.disable())

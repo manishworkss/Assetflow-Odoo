@@ -11,9 +11,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+/**
+ * Configuration class for OpenAPI (Swagger) documentation.
+ * This class configures the API documentation metadata and security schemes.
+ */
 public class OpenApiConfig {
 
     @Bean
+    /**
+     * Configures the OpenAPI documentation settings including API info, contact, license,
+     * and global security requirements.
+     * 
+     * @return the configured OpenAPI instance
+     */
     public OpenAPI assetFlowOpenAPI() {
         return new OpenAPI()
                 .info(new Info().title("AssetFlow API")
@@ -25,6 +35,11 @@ public class OpenApiConfig {
                 .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()));
     }
 
+    /**
+     * Creates the security scheme for Bearer Token Authentication (JWT).
+     * 
+     * @return the configured SecurityScheme for JWT
+     */
     private SecurityScheme createAPIKeyScheme() {
         return new SecurityScheme()
                 .type(SecurityScheme.Type.HTTP)
