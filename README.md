@@ -1,1 +1,3 @@
 # Assetflow-Odoo
+
+AssetFlow is a modern Enterprise Asset & Resource Management System designed to simplify how organizations manage physical assets, shared resources, maintenance workflows, and audits. The platform combines secure role-based access, intelligent asset allocation, predictive maintenance, AI-powered insights, resource booking, notifications, and real-time dashboards to deliver a scalable ERP solution for businesses, educational institutions, hospitals, and government organizations.
