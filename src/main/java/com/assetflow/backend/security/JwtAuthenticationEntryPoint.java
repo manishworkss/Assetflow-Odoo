@@ -1,8 +1,10 @@
 package com.assetflow.backend.security;
 
-import jakarta.servlet.ServletException;
+import com.assetflow.backend.response.ApiResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -11,16 +13,24 @@ import java.io.IOException;
 
 @Component
 /**
- * Component used to handle authentication errors.
- * It commences an authentication scheme and returns a 401 Unauthorized response
- * when a user tries to access a secured REST resource without supplying any credentials.
+ * Returns a clean JSON 401 Unauthorized response (matching our ApiResponse structure)
+ * when an unauthenticated request tries to access a protected resource.
  */
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
-                         AuthenticationException authException) throws IOException, ServletException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
+                         AuthenticationException authException) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("UTF-8");
+
+        ApiResponse<Void> apiResponse = ApiResponse.error(
+            "Authentication required. Invalid credentials or session expired."
+        );
+        response.getWriter().write(objectMapper.writeValueAsString(apiResponse));
     }
 }

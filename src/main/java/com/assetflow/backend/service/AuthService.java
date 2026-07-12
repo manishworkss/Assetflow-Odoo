@@ -15,4 +15,5 @@ public interface AuthService {
     JwtAuthResponse login(LoginDto loginDto);
     JwtAuthResponse verifyOtp(VerifyOtpDto verifyOtpDto);
     JwtAuthResponse googleAuth(GoogleAuthDto googleAuthDto);
+    String resendOtp(String email);
 }

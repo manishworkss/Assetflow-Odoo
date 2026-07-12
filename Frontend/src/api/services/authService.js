@@ -108,5 +108,16 @@ export const authService = {
     }
     return apiClient.post('/auth/google', { email, name, photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80' });
   },
+  /**
+   * POST /api/auth/resend-otp
+   * Regenerates a fresh OTP and dispatches it to the user's registered email
+   */
+  resendOtp: async (email) => {
+    if (USE_MOCK) {
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      return 'A new verification code has been sent to ' + email;
+    }
+    return apiClient.post('/auth/resend-otp', { email });
+  },
 };
 
