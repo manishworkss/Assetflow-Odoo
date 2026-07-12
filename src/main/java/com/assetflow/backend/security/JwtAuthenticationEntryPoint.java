@@ -10,6 +10,11 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
+/**
+ * Component used to handle authentication errors.
+ * It commences an authentication scheme and returns a 401 Unauthorized response
+ * when a user tries to access a secured REST resource without supplying any credentials.
+ */
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override

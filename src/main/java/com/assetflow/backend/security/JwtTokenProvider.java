@@ -11,6 +11,9 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
+/**
+ * Utility class for generating, validating, and extracting information from JWT tokens.
+ */
 public class JwtTokenProvider {
 
     @Value("${app.jwt-secret}")

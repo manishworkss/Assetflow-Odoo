@@ -14,6 +14,9 @@ import java.util.Collections;
 import java.util.Set;
 
 @Service
+/**
+ * Custom implementation of {@link UserDetailsService} to load user-specific data during authentication.
+ */
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
