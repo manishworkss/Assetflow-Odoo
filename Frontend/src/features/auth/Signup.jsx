@@ -125,12 +125,26 @@ export const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-[#1E192A] to-[#2B1B38] flex items-center justify-center p-4 sm:p-6 font-sans">
-      {/* Background Decorative Blobs */}
-      <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#714B67]/20 rounded-full blur-3xl pointer-events-none animate-pulse" />
-      <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-[#AA3BFF]/15 rounded-full blur-3xl pointer-events-none" />
+    <div className="relative min-h-screen flex items-center justify-center p-4 sm:p-6 font-sans overflow-hidden">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      >
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-server-rack-with-flashing-lights-4395-large.mp4" type="video/mp4" />
+      </video>
 
-      <div className="relative w-full max-w-4xl bg-white dark:bg-slate-800/95 rounded-3xl shadow-2xl border border-white/20 dark:border-slate-700/80 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+      {/* Background Dark Overlay */}
+      <div className="absolute inset-0 bg-slate-900/75 dark:bg-slate-900/85 z-0" />
+
+      {/* Background Decorative Blobs */}
+      <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#714B67]/40 rounded-full blur-3xl pointer-events-none animate-pulse z-0" />
+      <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-[#AA3BFF]/30 rounded-full blur-3xl pointer-events-none z-0" />
+
+      <div className="relative z-10 w-full max-w-4xl bg-white dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 dark:border-slate-700/80 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
         
         {/* Left Side: Brand & Onboarding Info */}
         <div className="lg:col-span-5 bg-gradient-to-b from-[#714B67] to-[#452B3F] p-8 sm:p-10 text-white flex flex-col justify-between relative overflow-hidden">
