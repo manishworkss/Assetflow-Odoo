@@ -47,16 +47,16 @@ export const Login = () => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center p-4 sm:p-6 font-sans overflow-hidden">
-      {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0"
-      >
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-server-rack-with-flashing-lights-4395-large.mp4" type="video/mp4" />
-      </video>
+      {/* Background Video (YouTube iframe) */}
+      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+        <iframe
+          src="https://www.youtube.com/embed/F_795M_bZ0E?autoplay=1&mute=1&loop=1&playlist=F_795M_bZ0E&controls=0&showinfo=0&modestbranding=1"
+          title="Background Video"
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          className="absolute w-[150vw] h-[150vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        ></iframe>
+      </div>
 
       {/* Background Dark Overlay */}
       <div className="absolute inset-0 bg-slate-900/75 dark:bg-slate-900/85 z-0" />
