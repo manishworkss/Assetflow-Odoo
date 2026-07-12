@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
+/**
+ * Global exception handler that intercepts exceptions thrown by controllers
+ * and returns appropriate HTTP responses with error details.
+ */
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
