@@ -40,6 +40,8 @@ public class AssetDto {
     private LocalDate purchaseDate;
 
     private BigDecimal price;
+    
+    private Integer healthScore;
 
     private Long departmentId;
     

@@ -46,6 +46,9 @@ public class Asset {
 
     private BigDecimal price;
 
+    @Column(name = "health_score")
+    private Integer healthScore;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;
@@ -57,4 +60,11 @@ public class Asset {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.healthScore == null) {
+            this.healthScore = 100;
+        }
+    }
 }

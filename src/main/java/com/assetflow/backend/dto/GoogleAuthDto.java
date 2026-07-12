@@ -1,6 +1,5 @@
 package com.assetflow.backend.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,13 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoogleAuthDto {
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
-    private String email;
-
-    @NotBlank(message = "Name is required")
-    private String name;
-
-    private String idToken;
-    private String photoUrl;
+    @NotBlank(message = "Google credential token is required")
+    private String credential;
 }

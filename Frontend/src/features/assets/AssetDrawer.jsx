@@ -1,5 +1,6 @@
 import React from 'react';
 import { Drawer } from '../../components/common/Drawer';
+import AssetQRCode from '../../components/common/AssetQRCode';
 import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
 import { useAuthStore } from '../../store/authStore';
@@ -124,8 +125,8 @@ export const AssetDrawer = ({ isOpen, onClose, asset, onEdit, onAllocate, onMain
             </p>
             <span className="text-[10px] text-slate-400">Scan via mobile camera or barcode gun for instant audits</span>
           </div>
-          <div className="w-16 h-16 bg-white rounded-xl border border-slate-300 flex items-center justify-center p-1.5 shadow-2xs">
-            <QrCode className="w-full h-full text-slate-800" />
+          <div className="w-24 h-24 bg-white rounded-xl border border-slate-300 flex items-center justify-center p-1.5 shadow-2xs">
+            <AssetQRCode assetTag={asset.assetTag} size={80} />
           </div>
         </div>
 
@@ -148,6 +149,14 @@ export const AssetDrawer = ({ isOpen, onClose, asset, onEdit, onAllocate, onMain
             <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800">
               <span className="text-[10px] text-slate-400 font-semibold block">Acquisition Value</span>
               <span className="text-sm font-bold text-slate-800 dark:text-slate-200">${asset.purchasePrice || 1800}</span>
+            </div>
+            <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800 col-span-2 flex justify-between items-center">
+              <span className="text-[10px] text-slate-400 font-semibold block">Asset Health Score</span>
+              <div className="flex gap-2">
+                 <span className={`text-sm font-bold ${(asset.healthScore ?? 100) < 40 ? 'text-red-500' : (asset.healthScore ?? 100) < 75 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                   {asset.healthScore ?? 100}%
+                 </span>
+              </div>
             </div>
           </div>
         </div>

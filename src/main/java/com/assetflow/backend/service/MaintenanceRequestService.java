@@ -12,4 +12,5 @@ public interface MaintenanceRequestService {
     MaintenanceRequestDto resolveRequest(Long requestId, String resolutionNotes, java.math.BigDecimal cost);
     List<MaintenanceRequestDto> getRequestsByAsset(Long assetId);
     List<MaintenanceRequestDto> getAllRequests();
+    MaintenanceRequestDto updateRequestStatus(Long requestId, String status, String technicianAssigned, java.math.BigDecimal costEstimate);
 }

@@ -38,6 +38,12 @@ public class AssetController {
         return ResponseEntity.ok(ApiResponse.success("Asset retrieved successfully", assetDto));
     }
 
+    @GetMapping("/tag/{assetTag}")
+    public ResponseEntity<ApiResponse<AssetDto>> getAssetByTag(@PathVariable("assetTag") String assetTag) {
+        AssetDto assetDto = assetService.getAssetByTag(assetTag);
+        return ResponseEntity.ok(ApiResponse.success("Asset retrieved successfully", assetDto));
+    }
+
     @GetMapping
     public ResponseEntity<ApiResponse<List<AssetDto>>> getAllAssets() {
         List<AssetDto> assets = assetService.getAllAssets();

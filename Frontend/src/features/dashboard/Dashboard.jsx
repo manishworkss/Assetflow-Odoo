@@ -272,6 +272,53 @@ export const Dashboard = () => {
         </Card>
       )}
 
+      {/* Critical Alert Section: Low Health Assets */}
+      {stats?.lowHealthAssets && stats.lowHealthAssets.length > 0 && (
+        <Card title="Critical Action Required: Low Health Assets (Requires Replacement/Maintenance)" className="border-2 border-amber-200 dark:border-amber-900/60 shadow-md mt-6">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b border-slate-200 dark:border-slate-800 text-xs uppercase font-bold text-slate-500 dark:text-slate-400 bg-slate-50/50 dark:bg-slate-900/50">
+                  <th className="py-3 px-4">Asset Tag & Name</th>
+                  <th className="py-3 px-4">Category</th>
+                  <th className="py-3 px-4">Department</th>
+                  <th className="py-3 px-4">Health Score</th>
+                  <th className="py-3 px-4 text-right">Instant Resolution</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800 text-sm">
+                {stats.lowHealthAssets.map((item) => (
+                  <tr key={item.id} className="hover:bg-amber-50/30 dark:hover:bg-amber-950/20 transition-colors">
+                    <td className="py-3 px-4 font-bold text-slate-900 dark:text-white">
+                      {item.name} <span className="text-xs text-slate-400">({item.assetTag})</span>
+                    </td>
+                    <td className="py-3 px-4 text-slate-700 dark:text-slate-300 font-medium">
+                      {item.categoryName}
+                    </td>
+                    <td className="py-3 px-4 text-slate-500 dark:text-slate-400 text-xs">
+                      {item.departmentName}
+                    </td>
+                    <td className="py-3 px-4">
+                      <span className="font-bold text-red-500">{item.healthScore}%</span>
+                    </td>
+                    <td className="py-3 px-4 text-right space-x-2">
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        icon={Wrench}
+                        title="Create Maintenance Request"
+                      >
+                        Raise Ticket
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      )}
+
       {/* Analytics Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Chart: Monthly Lifecycle Activity */}

@@ -7,6 +7,7 @@ import { Button } from '../../components/common/Button';
 import { Badge } from '../../components/common/Badge';
 import { AssetModal } from './AssetModal';
 import { AssetDrawer } from './AssetDrawer';
+import QRScanner from '../../components/common/QRScanner';
 import {
   Search,
   Filter,
@@ -21,7 +22,8 @@ import {
   Trash2,
   LayoutGrid,
   List,
-  RefreshCw
+  RefreshCw,
+  QrCode
 } from 'lucide-react';
 
 export const AssetDirectory = () => {
@@ -41,6 +43,7 @@ export const AssetDirectory = () => {
   const [assetToEdit, setAssetToEdit] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState(null);
+  const [isScannerOpen, setIsScannerOpen] = useState(false);
 
   const fetchAssets = async () => {
     setLoading(true);
@@ -75,6 +78,17 @@ export const AssetDirectory = () => {
 
   const handleQuickAllocate = (asset) => {
     showToast(`Initiating Check-out workflow for ${asset.assetTag}...`, 'info');
+  };
+
+  const handleScanSuccess = async (tag) => {
+    setIsScannerOpen(false);
+    try {
+      const asset = await assetService.getAssetByTag(tag);
+      setSelectedAsset(asset);
+      setIsDrawerOpen(true);
+    } catch (err) {
+      showToast('Asset not found or invalid QR code', 'error');
+    }
   };
 
   // Filtered Assets list
@@ -137,6 +151,14 @@ export const AssetDirectory = () => {
               Register Asset Profile
             </Button>
           )}
+          <Button
+            variant="outline"
+            icon={QrCode}
+            onClick={() => setIsScannerOpen(true)}
+            className="ml-2"
+          >
+            Scan QR
+          </Button>
         </div>
       </div>
 
@@ -223,6 +245,7 @@ export const AssetDirectory = () => {
                   <th className="py-3.5 px-4">Category</th>
                   <th className="py-3.5 px-4">Department</th>
                   <th className="py-3.5 px-4">Condition</th>
+                  <th className="py-3.5 px-4">Health</th>
                   <th className="py-3.5 px-4">Status</th>
                   <th className="py-3.5 px-4 text-right">Actions</th>
                 </tr>
@@ -260,6 +283,19 @@ export const AssetDirectory = () => {
                       <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded">
                         {asset.condition || 'GOOD'}
                       </span>
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <Badge
+                        variant={
+                          (asset.healthScore ?? 100) > 75
+                            ? 'success'
+                            : (asset.healthScore ?? 100) > 40
+                            ? 'warning'
+                            : 'danger'
+                        }
+                      >
+                        {asset.healthScore ?? 100}%
+                      </Badge>
                     </td>
                     <td className="py-3.5 px-4">
                       <Badge
@@ -351,7 +387,11 @@ export const AssetDirectory = () => {
 
               <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
                 <span className="text-slate-500">{asset.departmentName}</span>
-                <span className="font-bold text-emerald-600 dark:text-emerald-400">{asset.condition || 'GOOD'}</span>
+                <div className="flex gap-2">
+                   <span className={`font-bold ${(asset.healthScore ?? 100) < 40 ? 'text-red-500' : (asset.healthScore ?? 100) < 75 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                     Health: {asset.healthScore ?? 100}%
+                   </span>
+                </div>
               </div>
             </Card>
           ))}
@@ -378,6 +418,13 @@ export const AssetDirectory = () => {
         onAllocate={handleQuickAllocate}
         onMaintenance={handleQuickMaintenance}
       />
+
+      {isScannerOpen && (
+        <QRScanner
+          onScanSuccess={handleScanSuccess}
+          onClose={() => setIsScannerOpen(false)}
+        />
+      )}
     </div>
   );
 };

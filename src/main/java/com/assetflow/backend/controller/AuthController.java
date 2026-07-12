@@ -5,6 +5,8 @@ import com.assetflow.backend.dto.SignupDto;
 import com.assetflow.backend.dto.VerifyOtpDto;
 import com.assetflow.backend.dto.GoogleAuthDto;
 import com.assetflow.backend.dto.JwtAuthResponse;
+import com.assetflow.backend.dto.ForgotPasswordDto;
+import com.assetflow.backend.dto.ResetPasswordDto;
 import com.assetflow.backend.response.ApiResponse;
 import com.assetflow.backend.service.AuthService;
 import jakarta.validation.Valid;
@@ -56,5 +58,17 @@ public class AuthController {
         }
         String response = authService.resendOtp(email);
         return ResponseEntity.ok(ApiResponse.success("Verification code resent", response));
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<ApiResponse<String>> forgotPassword(@Valid @RequestBody ForgotPasswordDto forgotPasswordDto) {
+        String response = authService.forgotPassword(forgotPasswordDto);
+        return ResponseEntity.ok(ApiResponse.success("Forgot password email sent", response));
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<ApiResponse<String>> resetPassword(@Valid @RequestBody ResetPasswordDto resetPasswordDto) {
+        String response = authService.resetPassword(resetPasswordDto);
+        return ResponseEntity.ok(ApiResponse.success("Password reset successful", response));
     }
 }

@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface MaintenanceRequestRepository extends JpaRepository<MaintenanceRequest, Long> {
     List<MaintenanceRequest> findByAssetId(Long assetId);
+    long countByAssetId(Long assetId);
 }

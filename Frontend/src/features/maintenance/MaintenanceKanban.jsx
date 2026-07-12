@@ -30,7 +30,7 @@ export const MaintenanceKanban = () => {
   const fetchTickets = async () => {
     setLoading(true);
     try {
-      const data = await maintenanceService.getTickets();
+      const data = await maintenanceService.getMaintenanceRequests();
       setTickets(data);
     } catch (err) {
       showToast('Error loading maintenance kanban board', 'error');
@@ -45,7 +45,7 @@ export const MaintenanceKanban = () => {
 
   const handleAdvanceStatus = async (ticket, nextStatus) => {
     try {
-      await maintenanceService.updateTicketStatus(ticket.id, nextStatus);
+      await maintenanceService.updateMaintenanceStatus(ticket.id, nextStatus);
 
       // Automated Workflow Coupling: If moving to COMPLETED or RESOLVED, restore asset to AVAILABLE!
       if (nextStatus === 'COMPLETED' || nextStatus === 'RESOLVED') {
