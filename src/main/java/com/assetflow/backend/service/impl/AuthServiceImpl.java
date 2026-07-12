@@ -15,6 +15,7 @@ import com.assetflow.backend.repository.DepartmentRepository;
 import com.assetflow.backend.repository.UserRepository;
 import com.assetflow.backend.security.JwtTokenProvider;
 import com.assetflow.backend.service.AuthService;
+import com.assetflow.backend.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +23,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -41,6 +45,9 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
     public String signup(SignupDto signupDto) {
         // check if email exists in database
@@ -51,11 +58,16 @@ public class AuthServiceImpl implements AuthService {
         Department department = departmentRepository.findById(signupDto.getDepartmentId())
                 .orElseThrow(() -> new ResourceNotFoundException("Department not found with ID: " + signupDto.getDepartmentId()));
 
+        String otpCode = String.format("%06d", new SecureRandom().nextInt(1000000));
+
         User user = new User();
         user.setName(signupDto.getName());
         user.setEmail(signupDto.getEmail());
         user.setPassword(passwordEncoder.encode(signupDto.getPassword()));
         user.setDepartment(department);
+        user.setVerificationCode(otpCode);
+        user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(10));
+        user.setVerified(false);
 
         try {
             user.setRole(Role.valueOf(signupDto.getRole().toUpperCase()));
@@ -65,7 +77,10 @@ public class AuthServiceImpl implements AuthService {
 
         userRepository.save(user);
 
-        return "User registered successfully.";
+        // Dispatch 6-digit OTP verification code via email
+        emailService.sendOtpVerificationEmail(user.getEmail(), user.getName(), otpCode);
+
+        return "Verification code sent to " + user.getEmail();
     }
 
     @Override
@@ -79,10 +94,13 @@ public class AuthServiceImpl implements AuthService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = jwtTokenProvider.generateToken(authentication);
-        
         User user = userRepository.findByEmail(loginDto.getEmail()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        
+        if (!user.isVerified() && user.getVerificationCode() != null) {
+            throw new IllegalArgumentException("Account is pending verification. Please verify your email with the 6-digit OTP code.");
+        }
+
+        String token = jwtTokenProvider.generateToken(authentication);
+
         UserDto userDto = UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())
@@ -100,10 +118,22 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(verifyOtpDto.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for email: " + verifyOtpDto.getEmail()));
 
-        // In a live system, compare OTP against cached code. For instant verification and demo, accept valid 6-digit codes.
-        if (verifyOtpDto.getOtp() == null || verifyOtpDto.getOtp().length() < 4) {
-            throw new IllegalArgumentException("Invalid verification code provided.");
+        if (user.getVerificationCode() == null) {
+            throw new IllegalArgumentException("No active verification request found or account is already verified.");
         }
+
+        if (verifyOtpDto.getOtp() == null || !verifyOtpDto.getOtp().trim().equals(user.getVerificationCode())) {
+            throw new IllegalArgumentException("Invalid verification code. Please check your email and enter the exact 6-digit code.");
+        }
+
+        if (user.getVerificationCodeExpiresAt() != null && LocalDateTime.now().isAfter(user.getVerificationCodeExpiresAt())) {
+            throw new IllegalArgumentException("Verification code has expired. Please request a new verification code.");
+        }
+
+        user.setVerificationCode(null);
+        user.setVerificationCodeExpiresAt(null);
+        user.setVerified(true);
+        userRepository.save(user);
 
         String token = jwtTokenProvider.generateTokenFromUsername(user.getEmail());
 
@@ -134,6 +164,7 @@ public class AuthServiceImpl implements AuthService {
             newUser.setPassword(passwordEncoder.encode("OAUTH_GOOGLE_" + System.currentTimeMillis()));
             newUser.setDepartment(defaultDept);
             newUser.setRole(Role.EMPLOYEE);
+            newUser.setVerified(true);
             return userRepository.save(newUser);
         });
 

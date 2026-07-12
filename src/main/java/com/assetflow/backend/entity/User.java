@@ -42,6 +42,16 @@ public class User {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    @Column(name = "verification_code")
+    private String verificationCode;
+
+    @Column(name = "verification_code_expires_at")
+    private LocalDateTime verificationCodeExpiresAt;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean verified = false;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
