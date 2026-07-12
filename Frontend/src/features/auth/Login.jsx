@@ -128,9 +128,9 @@ export const Login = () => {
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
                   Password
                 </label>
-                <span className="text-xs text-[#714B67] dark:text-purple-400 hover:underline cursor-pointer">
+                <Link to="/forgot-password" className="text-xs text-[#714B67] dark:text-purple-400 hover:underline cursor-pointer">
                   Forgot password?
-                </span>
+                </Link>
               </div>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />

@@ -8,6 +8,8 @@ import { RoleGuard } from './components/layout/RoleGuard';
 // Phase 2 Screens
 import { Login } from './features/auth/Login';
 import { Signup } from './features/auth/Signup';
+import { ForgotPassword } from './features/auth/ForgotPassword';
+import { ResetPassword } from './features/auth/ResetPassword';
 import { Dashboard } from './features/dashboard/Dashboard';
 import { OrgSetup } from './features/organization/OrgSetup';
 import { AssetDirectory } from './features/assets/AssetDirectory';
@@ -44,6 +46,8 @@ export function App() {
         {/* Public Authentication Routes */}
         <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" replace />} />
         <Route path="/signup" element={!isAuthenticated ? <Signup /> : <Navigate to="/" replace />} />
+        <Route path="/forgot-password" element={!isAuthenticated ? <ForgotPassword /> : <Navigate to="/" replace />} />
+        <Route path="/reset-password" element={!isAuthenticated ? <ResetPassword /> : <Navigate to="/" replace />} />
 
         {/* Protected Enterprise ERP Portal */}
         <Route

@@ -111,5 +111,27 @@ export const authService = {
     }
     return apiClient.post('/auth/resend-otp', { email });
   },
+
+  /**
+   * POST /api/auth/forgot-password
+   */
+  forgotPassword: async (email) => {
+    if (USE_MOCK) {
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      return 'If that email exists, a password reset link has been sent.';
+    }
+    return apiClient.post('/auth/forgot-password', { email });
+  },
+
+  /**
+   * POST /api/auth/reset-password
+   */
+  resetPassword: async (email, token, newPassword) => {
+    if (USE_MOCK) {
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      return 'Password successfully reset.';
+    }
+    return apiClient.post('/auth/reset-password', { email, token, newPassword });
+  },
 };
 
