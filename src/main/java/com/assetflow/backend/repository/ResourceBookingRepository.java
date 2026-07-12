@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+/**
+ * Repository interface for {@link ResourceBooking} entities.
+ * Provides basic CRUD operations and custom query methods.
+ */
 public interface ResourceBookingRepository extends JpaRepository<ResourceBooking, Long> {
     List<ResourceBooking> findByUserId(Long userId);
     List<ResourceBooking> findByAssetId(Long assetId);
