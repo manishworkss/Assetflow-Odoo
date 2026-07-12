@@ -67,13 +67,13 @@ export const Sidebar = () => {
     },
     {
       name: 'Analytics & Reports',
-      path: '/reports',
+      path: '/analytics',
       icon: BarChart3,
       roles: ['ADMIN', 'ASSET_MANAGER']
     },
     {
       name: 'Activity Logs',
-      path: '/logs',
+      path: '/activity-logs',
       icon: Bell,
       roles: ['ADMIN', 'ASSET_MANAGER', 'DEPARTMENT_HEAD', 'EMPLOYEE']
     }
