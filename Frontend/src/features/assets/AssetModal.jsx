@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { assetService } from '../../api';
 import { useUiStore } from '../../store/uiStore';
-import { Modal } from '../../components/common/Button'; // Wait, let's import Modal properly from common/Modal
 import { Modal as CommonModal } from '../../components/common/Modal';
 import { Button } from '../../components/common/Button';
 import { Box, Tag, DollarSign, Calendar, FileText, CheckCircle } from 'lucide-react';
