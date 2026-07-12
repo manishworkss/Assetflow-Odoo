@@ -46,6 +46,16 @@ export const assetService = {
     return apiClient.get(`/assets/${idOrTag}`);
   },
 
+  getAssetByTag: async (tag) => {
+    if (USE_MOCK) {
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      const found = mockAssets.find((a) => a.assetTag === tag);
+      if (!found) throw new Error('Asset not found');
+      return found;
+    }
+    return apiClient.get(`/assets/tag/${tag}`);
+  },
+
   /**
    * Aligned with Teammate Phase 4: POST /api/assets
    */

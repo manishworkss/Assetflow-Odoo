@@ -10,6 +10,7 @@ public class DashboardStatsDto {
     private long availableAssets;
     private long inMaintenanceAssets;
     private List<AssetDto> overdueAllocations;
+    private List<AssetDto> lowHealthAssets;
     private long pendingMaintenanceTickets;
 
     private List<MonthlyActivity> monthlyActivity;
@@ -41,6 +42,8 @@ public class DashboardStatsDto {
     public void setInMaintenanceAssets(long inMaintenanceAssets) { this.inMaintenanceAssets = inMaintenanceAssets; }
     public List<AssetDto> getOverdueAllocations() { return overdueAllocations; }
     public void setOverdueAllocations(List<AssetDto> overdueAllocations) { this.overdueAllocations = overdueAllocations; }
+    public List<AssetDto> getLowHealthAssets() { return lowHealthAssets; }
+    public void setLowHealthAssets(List<AssetDto> lowHealthAssets) { this.lowHealthAssets = lowHealthAssets; }
     public long getPendingMaintenanceTickets() { return pendingMaintenanceTickets; }
     public void setPendingMaintenanceTickets(long pendingMaintenanceTickets) { this.pendingMaintenanceTickets = pendingMaintenanceTickets; }
 

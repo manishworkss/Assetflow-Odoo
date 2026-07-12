@@ -12,5 +12,6 @@ public interface AssetService {
     AssetDto getAssetById(Long id);
     List<AssetDto> getAllAssets();
     AssetDto updateAsset(Long id, AssetDto assetDto);
+    AssetDto getAssetByTag(String tag);
     void deleteAsset(Long id);
 }

@@ -34,6 +34,7 @@ export const dashboardService = {
       const totalAssetsCount = assets.length;
       const allocatedAssetsCount = assets.filter((a) => a.status === 'ALLOCATED').length;
       const availableAssetsCount = assets.filter((a) => a.status === 'AVAILABLE').length;
+      const lowHealthAssets = assets.filter((a) => (a.healthScore ?? 100) < 40);
       const maintenanceCount = assets.filter((a) => a.status === 'UNDER_MAINTENANCE').length;
       const lostCount = assets.filter((a) => a.status === 'LOST').length;
 
@@ -71,6 +72,7 @@ export const dashboardService = {
         allocatedAssets: allocatedAssetsCount,
         availableAssets: availableAssetsCount,
         inMaintenanceAssets: maintenanceCount,
+        lowHealthAssets: lowHealthAssets,
         overdueAllocations: overdueAssets,
         pendingMaintenanceTickets: repairs.filter((r) => r.status === 'PENDING' || r.status === 'IN_PROGRESS').length,
         monthlyActivity: [

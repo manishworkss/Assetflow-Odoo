@@ -108,6 +108,13 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
+    public AssetDto getAssetByTag(String tag) {
+        Asset asset = assetRepository.findByAssetTag(tag)
+                .orElseThrow(() -> new ResourceNotFoundException("Asset not found with tag: " + tag));
+        return mapToDto(asset);
+    }
+
+    @Override
     public void deleteAsset(Long id) {
         Asset asset = assetRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Asset not found with id: " + id));
@@ -124,6 +131,7 @@ public class AssetServiceImpl implements AssetService {
                 .status(asset.getStatus())
                 .purchaseDate(asset.getPurchaseDate())
                 .price(asset.getPrice())
+                .healthScore(asset.getHealthScore())
                 .departmentId(asset.getDepartment() != null ? asset.getDepartment().getId() : null)
                 .departmentName(asset.getDepartment() != null ? asset.getDepartment().getName() : null)
                 .build();

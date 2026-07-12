@@ -78,11 +78,17 @@ public class DashboardServiceImpl implements DashboardService {
         long activeBookings = resourceBookingRepository.count(); // simplifying for now
         long openAudits = auditCycleRepository.count(); // simplifying for now
 
+        List<AssetDto> lowHealthAssetDtos = filteredAssets.stream()
+                .filter(a -> a.getHealthScore() != null && a.getHealthScore() < 40)
+                .map(this::mapToAssetDto)
+                .collect(Collectors.toList());
+
         dto.setTotalAssets(totalAssetsCount);
         dto.setAllocatedAssets(allocatedAssetsCount);
         dto.setAvailableAssets(availableAssetsCount);
         dto.setInMaintenanceAssets(maintenanceCount);
         dto.setOverdueAllocations(overdueAssetDtos);
+        dto.setLowHealthAssets(lowHealthAssetDtos);
         dto.setPendingMaintenanceTickets(pendingMaintenance);
 
         // KPIs
@@ -176,6 +182,7 @@ public class DashboardServiceImpl implements DashboardService {
             dto.setDepartmentId(asset.getDepartment().getId());
             dto.setDepartmentName(asset.getDepartment().getName());
         }
+        dto.setHealthScore(asset.getHealthScore());
         return dto;
     }
 }
