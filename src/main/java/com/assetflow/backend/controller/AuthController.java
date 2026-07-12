@@ -47,5 +47,14 @@ public class AuthController {
         JwtAuthResponse jwtAuthResponse = authService.login(loginDto);
         return ResponseEntity.ok(ApiResponse.success("Login successful", jwtAuthResponse));
     }
-}
 
+    @PostMapping("/resend-otp")
+    public ResponseEntity<ApiResponse<String>> resendOtp(@RequestBody java.util.Map<String, String> body) {
+        String email = body.get("email");
+        if (email == null || email.isBlank()) {
+            return ResponseEntity.badRequest().body(ApiResponse.error("Email is required"));
+        }
+        String response = authService.resendOtp(email);
+        return ResponseEntity.ok(ApiResponse.success("Verification code resent", response));
+    }
+}

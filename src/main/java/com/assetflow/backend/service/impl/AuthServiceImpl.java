@@ -197,4 +197,23 @@ public class AuthServiceImpl implements AuthService {
 
         return new JwtAuthResponse(token, userDto);
     }
+
+    @Override
+    public String resendOtp(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("No account found for email: " + email + ". Please register first."));
+
+        if (user.isVerified()) {
+            throw new IllegalArgumentException("Account is already verified. Please login.");
+        }
+
+        String newOtpCode = String.format("%06d", new SecureRandom().nextInt(1000000));
+        user.setVerificationCode(newOtpCode);
+        user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(10));
+        userRepository.save(user);
+
+        emailService.sendOtpVerificationEmail(user.getEmail(), user.getName(), newOtpCode);
+
+        return "A new verification code has been sent to " + user.getEmail();
+    }
 }

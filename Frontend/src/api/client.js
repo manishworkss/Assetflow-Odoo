@@ -32,8 +32,7 @@ apiClient.interceptors.response.use(
     if (response.data && response.data.success !== undefined) {
       if (response.data.success === false) {
         const errorMsg = response.data.message || 'API operation failed';
-        useUiStore.getState().showToast(errorMsg, 'error');
-        return Promise.reject(errorMsg);
+        return Promise.reject(new Error(errorMsg));
       }
       // Return clean DTO payload directly inside .data
       return response.data.data !== undefined ? response.data.data : response.data;
@@ -44,23 +43,27 @@ apiClient.interceptors.response.use(
     const status = error.response?.status;
     const errorData = error.response?.data;
     const errorMessage = errorData?.message || error.message || 'Network or Server Error';
+    const requestUrl = error.config?.url || '';
 
-    // Handle Spring Boot Security 401 Unauthorized (invalid or expired JWT token)
-    if (status === 401) {
+    // Auth endpoints (login, signup, verify-otp, resend-otp) — NEVER auto-redirect on 401.
+    // A 401 here means wrong credentials, not an expired session.
+    const isAuthEndpoint = requestUrl.includes('/auth/');
+
+    if (status === 401 && !isAuthEndpoint) {
+      // Session token expired on a protected route — log out and redirect
       useAuthStore.getState().logout();
       useUiStore.getState().showToast('Session expired. Please log in again.', 'warning');
       window.location.href = '/login';
-      return Promise.reject('Unauthorized: Session expired');
+      return Promise.reject(new Error('Unauthorized: Session expired'));
     }
 
     // Handle 403 Forbidden (RBAC violation)
     if (status === 403) {
       useUiStore.getState().showToast('Access denied: You do not have permission for this action.', 'error');
-      return Promise.reject('Forbidden: Access denied');
+      return Promise.reject(new Error('Forbidden: Access denied'));
     }
 
-    // General error toast notification
-    useUiStore.getState().showToast(errorMessage, 'error');
-    return Promise.reject(errorMessage);
+    // Propagate the error — let the calling component's catch() show its own toast
+    return Promise.reject(new Error(errorMessage));
   }
 );

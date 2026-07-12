@@ -50,7 +50,7 @@ public class EmailServiceImpl implements EmailService {
                 message.setSubject(subject);
                 message.setText(body);
                 javaMailSender.send(message);
-                logger.info("Successfully dispatched real OTP verification email to {}", toEmail);
+                logger.info("Successfully dispatched real OTP verification email to {}. [DEVELOPMENT ONLY - OTP Code: {}]", toEmail, otpCode);
                 return;
             } catch (Exception ex) {
                 logger.warn("SMTP real email dispatch failed (Please check MAIL_USERNAME and MAIL_PASSWORD): {}", ex.getMessage());

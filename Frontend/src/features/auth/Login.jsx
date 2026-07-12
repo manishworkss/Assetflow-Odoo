@@ -7,8 +7,8 @@ import { Button } from '../../components/common/Button';
 import { Box, Lock, Mail, Sparkles, UserCheck, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export const Login = () => {
-  const [email, setEmail] = useState('marcus.s@assetflow.com');
-  const [password, setPassword] = useState('admin2026');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuthStore();
@@ -20,10 +20,10 @@ export const Login = () => {
     try {
       const { token, user } = await authService.login(email, password);
       login(user, token, true);
-      showToast(`Welcome back to AssetFlow, ${user.name}! (${user.role})`, 'success');
+      showToast(`Welcome back, ${user.name}!`, 'success');
       navigate('/');
     } catch (err) {
-      showToast(err.message || 'Login failed. Please verify credentials.', 'error');
+      showToast(err.message || 'Invalid email or password. Please try again.', 'error');
     } finally {
       setLoading(false);
     }

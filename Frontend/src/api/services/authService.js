@@ -20,7 +20,11 @@ export const authService = {
         user: foundUser,
       };
     }
-    return apiClient.post('/auth/login', { email, password });
+    const response = await apiClient.post('/auth/login', { email, password });
+    return {
+      token: response.accessToken,
+      user: response.user
+    };
   },
 
   /**
@@ -78,7 +82,11 @@ export const authService = {
         user: foundUser,
       };
     }
-    return apiClient.post('/auth/verify-otp', { email, otp });
+    const response = await apiClient.post('/auth/verify-otp', { email, otp });
+    return {
+      token: response.accessToken,
+      user: response.user
+    };
   },
 
   /**
@@ -106,7 +114,22 @@ export const authService = {
         user: foundUser,
       };
     }
-    return apiClient.post('/auth/google', { email, name, photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80' });
+    const response = await apiClient.post('/auth/google', { email, name, photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80' });
+    return {
+      token: response.accessToken,
+      user: response.user
+    };
+  },
+  /**
+   * POST /api/auth/resend-otp
+   * Regenerates a fresh OTP and dispatches it to the user's registered email
+   */
+  resendOtp: async (email) => {
+    if (USE_MOCK) {
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      return 'A new verification code has been sent to ' + email;
+    }
+    return apiClient.post('/auth/resend-otp', { email });
   },
 };
 
