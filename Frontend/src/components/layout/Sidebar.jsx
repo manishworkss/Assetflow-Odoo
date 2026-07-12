@@ -91,25 +91,35 @@ export const Sidebar = () => {
       )}
     >
       {/* Brand Header */}
-      <div className="flex items-center justify-between h-16 px-4 border-b border-white/10">
-        <div className="flex items-center gap-3 overflow-hidden">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#714B67] to-[#AA3BFF] flex items-center justify-center shrink-0 shadow-md">
-            <Box className="w-6 h-6 text-white" />
-          </div>
-          {sidebarOpen && (
-            <div className="flex flex-col">
-              <span className="font-bold text-lg text-white tracking-tight leading-none">AssetFlow</span>
-              <span className="text-[10px] uppercase tracking-wider text-purple-300/70 font-semibold mt-1">Enterprise Edition</span>
+      <div className={clsx("flex items-center h-16 border-b border-white/10", sidebarOpen ? "justify-between px-4" : "justify-center")}>
+        {sidebarOpen ? (
+          <>
+            <div className="flex items-center gap-3 overflow-hidden">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#714B67] to-[#AA3BFF] flex items-center justify-center shrink-0 shadow-md">
+                <Box className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-lg text-white tracking-tight leading-none">AssetFlow</span>
+                <span className="text-[10px] uppercase tracking-wider text-purple-300/70 font-semibold mt-1">Enterprise Edition</span>
+              </div>
             </div>
-          )}
-        </div>
-        <button
-          onClick={toggleSidebar}
-          className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
-          title={sidebarOpen ? 'Collapse Sidebar' : 'Expand Sidebar'}
-        >
-          {sidebarOpen ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
-        </button>
+            <button
+              onClick={toggleSidebar}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              title="Collapse Sidebar"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={toggleSidebar}
+            className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#714B67] to-[#AA3BFF] flex items-center justify-center shrink-0 shadow-md transition-transform hover:scale-105"
+            title="Expand Sidebar"
+          >
+            <Box className="w-6 h-6 text-white" />
+          </button>
+        )}
       </div>
 
       {/* Navigation List */}
