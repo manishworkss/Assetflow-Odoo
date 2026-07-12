@@ -18,6 +18,20 @@ export const useAuthStore = create((set, get) => ({
   token: storedToken || 'mock-jwt-token-assetflow-2026',
   isAuthenticated: true,
 
+  initializeAuth: () => {
+    const token = sessionStorage.getItem('assetflow_token') || localStorage.getItem('assetflow_token');
+    const user = sessionStorage.getItem('assetflow_user') || localStorage.getItem('assetflow_user');
+    if (token && user) {
+      try {
+        set({ token, user: JSON.parse(user), isAuthenticated: true });
+      } catch (e) {
+        set({ user: initialUser, token: 'mock-jwt-token-assetflow-2026', isAuthenticated: true });
+      }
+    } else {
+      set({ user: initialUser, token: 'mock-jwt-token-assetflow-2026', isAuthenticated: true });
+    }
+  },
+
   login: (user, token, rememberMe = true) => {
     const storage = rememberMe ? localStorage : sessionStorage;
     storage.setItem('assetflow_token', token);
