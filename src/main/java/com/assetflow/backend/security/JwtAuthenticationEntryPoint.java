@@ -18,7 +18,8 @@ import java.io.IOException;
  */
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @org.springframework.beans.factory.annotation.Autowired
+    private ObjectMapper objectMapper;
 
     @Override
     public void commence(HttpServletRequest request,
